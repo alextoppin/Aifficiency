@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Aifficiency — Services & Pricing</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@300;400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
@@ -719,6 +719,181 @@
     color: var(--ink);
     background: var(--card);
     border-bottom: 2px solid var(--orange);
+  }
+
+
+  /* ── iPHONE 16 OPTIMISATION (393px viewport) ── */
+  @media(max-width:430px){
+
+    /* Header */
+    .header-bar{padding:0 1rem;height:52px}
+    .nav-logo{font-size:1.1rem}
+    .header-cta a{font-size:0.68rem;padding:0.45rem 0.9rem;letter-spacing:0.04em}
+    .nav-bar-inner a{font-size:0.75rem;padding:0 1rem}
+    .nav-bar{height:40px}
+    .nav-bar-inner{height:40px}
+
+    /* Hero */
+    .hero-left,.hero-right{padding:2rem 1rem!important}
+    .hero-h1,.hero-name,.hero h1{
+      font-size:2.4rem!important;
+      line-height:1!important;
+      letter-spacing:-0.03em!important
+    }
+    .hero-eyebrow{font-size:0.6rem;margin-bottom:1rem}
+    .hero-sub,.hero-intro{font-size:0.875rem!important;line-height:1.65!important}
+    .hero-tagline{font-size:0.875rem}
+
+    /* Stat rows */
+    .hero-stat-row,.credential-row,.expect-row{
+      display:grid!important;
+      grid-template-columns:1fr 1fr!important;
+      gap:1rem!important
+    }
+    .stat-number{font-size:2.2rem!important}
+    .stat-desc{font-size:0.78rem}
+
+    /* Section labels */
+    .section-label{font-size:0.58rem;margin-bottom:1rem}
+
+    /* All sections */
+    section,
+    .tiers-section,.how-section,.why-section,
+    .faq-section,.reasons-section,.cost-section,
+    .sme-section,.not-right,.personal-section,
+    .network-strip,.background-section,.what-section,
+    .articles-section,.cta-section,.cta-strip,
+    .cta-banner,.proof-section,.start-section,
+    .form-col,.info-col,.signals-section,
+    .bg-left,.bg-right,.hero-left,.hero-right,
+    .why-left,.why-right,.cost-left,.cost-right,
+    .personal-intro,.interest-card,
+    .pull-quote,.how-header,.faq-content{
+      padding:1.75rem 1rem!important
+    }
+
+    /* Tier cards */
+    .tier,.tier-card{padding:1.5rem 1rem!important}
+    .tier-name{font-size:1.8rem!important}
+    .price{font-size:2.2rem!important}
+    .tier-badge{font-size:0.55rem;padding:0.25rem 0.55rem}
+
+    /* Reason cards */
+    .reason{padding:1.25rem 1rem!important}
+    .reason-title{font-size:0.95rem}
+    .reason-body,.reason-stat{font-size:0.8rem}
+
+    /* Article cards */
+    .article-card{padding:1.5rem 1rem!important}
+    .article-title{font-size:0.95rem}
+    .article-excerpt{font-size:0.78rem}
+
+    /* Featured */
+    .featured-main{padding:1.75rem 1rem!important}
+    .featured-title{font-size:1.4rem!important}
+    .featured-excerpt{font-size:0.82rem}
+    .featured-side-card{padding:1.25rem 1rem!important}
+
+    /* Case cards */
+    .case-card{padding:1.5rem 1rem!important}
+    .result-val{font-size:1.2rem!important}
+
+    /* How steps */
+    .how-step{padding:1.75rem 1rem!important}
+    .how-step-num{font-size:2.5rem}
+    .how-step-title{font-size:1rem}
+
+    /* Why section */
+    .why-quote{font-size:1.3rem!important}
+    .why-list li{font-size:0.82rem}
+
+    /* Pull quote */
+    .pull-quote blockquote{font-size:1.3rem!important}
+
+    /* FAQ */
+    .faq-q{font-size:0.85rem;padding:1rem 0}
+    .faq-a{font-size:0.82rem}
+    .faq-group-title{font-size:1rem}
+    .faq-group{margin-bottom:2rem}
+
+    /* Contact form */
+    .form-input{padding:0.75rem 0.85rem;font-size:0.875rem}
+    .form-label{font-size:0.58rem}
+    .form-submit{padding:0.9rem 1.25rem;font-size:0.78rem}
+    .form-note{font-size:0.58rem}
+
+    /* Quiz */
+    .quiz-item{padding:1.25rem 0.875rem!important}
+    .quiz-item-q{font-size:0.85rem}
+    .quiz-item-hint{font-size:0.75rem}
+    .quiz-check{width:20px;height:20px;flex-shrink:0}
+    .result-box{padding:1.5rem 1rem!important}
+    .result-heading{font-size:1.3rem}
+    .result-body{font-size:0.82rem}
+
+    /* Signals */
+    .signal-item{font-size:0.82rem;padding:0.75rem 0}
+    .signals-heading{font-size:1.2rem!important}
+
+    /* About */
+    .bg-heading,.personal-heading,.network-heading,
+    .what-heading,.cost-heading,.sme-heading,
+    .not-right-heading,.cta-text,.why-heading{
+      font-size:1.5rem!important
+    }
+    .bg-body,.network-body,.personal-body,
+    .sme-body,.not-right-body,.cost-body,
+    .how-detail,.who-body{
+      font-size:0.85rem!important;
+      line-height:1.7!important
+    }
+    .exp-item{font-size:0.82rem}
+    .interest-name{font-size:0.9rem}
+    .interest-desc{font-size:0.75rem}
+    .network-tag{font-size:0.58rem;padding:0.28rem 0.6rem}
+
+    /* Process strip */
+    .step-name{font-size:0.75rem}
+
+    /* Marquee */
+    .marquee-inner span{font-size:0.55rem}
+    .marquee-wrap{padding:0.55rem 0}
+
+    /* CTA buttons full width */
+    .btn-primary,.btn-secondary,.cta-btn,
+    .cta-btn-main,.cta-banner-btn,.why-link{
+      width:100%!important;
+      text-align:center!important;
+      display:block!important;
+      padding:0.9rem 1rem!important;
+      font-size:0.78rem!important
+    }
+    .hero-actions{flex-direction:column;gap:0.75rem}
+
+    /* Footer */
+    footer{padding:1.25rem 1rem!important}
+    .footer-logo{font-size:1rem}
+    .footer-note{font-size:0.55rem}
+
+    /* Industry list */
+    .industry-item,.exp-item,.why-point,
+    .caveat-item,.cost-list li{font-size:0.82rem}
+
+    /* Info col */
+    .process-step-body{font-size:0.82rem}
+    .info-heading{font-size:0.95rem}
+    .info-body{font-size:0.82rem}
+    .linkedin-link{font-size:0.72rem;padding:0.65rem 1rem}
+
+    /* What section tiers */
+    .tier-card-name{font-size:1.2rem}
+    .tier-card-desc{font-size:0.78rem}
+    .tier-card-price{font-size:0.6rem}
+    .tier-card{padding:1.5rem 1rem!important}
+
+    /* Safe area for iPhone notch/home bar */
+    body{padding-bottom:env(safe-area-inset-bottom)}
+    .site-header{padding-top:env(safe-area-inset-top)}
   }
 
 </style>
