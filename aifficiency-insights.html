@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aifficiency — Insights</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@300;400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--bg:#f0ede6;--ink:#111;--ink-mid:#444;--acid:#c8ff00;--orange:#ff4800;--card:#e4e1da;--dark:#111;--border:#c0bdb6}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;overflow-x:hidden;cursor:none}
+  .cursor{width:10px;height:10px;background:var(--orange);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
+  .cursor-ring{width:32px;height:32px;border:1.5px solid var(--orange);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%)}
+  nav{padding:0 3rem;display:flex;align-items:stretch;border-bottom:1.5px solid var(--ink);position:sticky;top:0;background:var(--bg);z-index:200;height:64px}
+  .nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.35rem;letter-spacing:-0.03em;color:var(--ink);text-decoration:none;display:flex;align-items:center;margin-right:3rem;flex-shrink:0}
+  .nav-logo em{font-style:normal;background:var(--ink);color:var(--acid);padding:0.05em 0.2em}
+  .nav-links{display:flex;align-items:stretch;list-style:none;flex:1}
+  .nav-links li{display:flex;align-items:stretch}
+  .nav-links a{font-size:0.85rem;font-weight:500;color:var(--ink-mid);text-decoration:none;display:flex;align-items:center;padding:0 1.25rem;transition:color 0.15s,background 0.15s}
+  .nav-links a:hover{color:var(--ink);background:var(--card)}
+  .nav-links a.active{font-weight:700;color:var(--ink);border-left:1.5px solid var(--ink);border-right:1.5px solid var(--ink)}
+  .nav-cta{margin-left:auto;display:flex;align-items:center}
+  .nav-cta a{font-family:'Syne',sans-serif;font-weight:700;font-size:0.78rem;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;background:var(--ink);color:var(--bg);padding:0.6rem 1.4rem;border:1.5px solid var(--ink);transition:background 0.15s;cursor:none}
+  .nav-cta a:hover{background:var(--orange);border-color:var(--orange);color:#fff}
+  .section-label{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-mid);margin-bottom:1.5rem}
+
+  .hero{padding:5rem 3rem 4rem;border-bottom:1.5px solid var(--ink)}
+  .hero-eyebrow{font-family:'DM Mono',monospace;font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--orange);margin-bottom:1.5rem;opacity:0;animation:fadeUp 0.5s 0.1s forwards}
+  .hero h1{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(3rem,6vw,5.5rem);letter-spacing:-0.04em;line-height:0.96;opacity:0;animation:fadeUp 0.6s 0.25s forwards}
+  .hero h1 em{font-style:normal;background:var(--ink);color:var(--acid);padding:0 0.1em}
+  .hero-sub{font-size:1rem;color:var(--ink-mid);line-height:1.7;max-width:520px;margin-top:1.75rem;opacity:0;animation:fadeUp 0.6s 0.4s forwards}
+
+  /* FEATURED */
+  .featured{display:grid;grid-template-columns:2fr 1fr;border-bottom:1.5px solid var(--ink)}
+  .featured-main{padding:3rem;border-right:1.5px solid var(--ink);display:flex;flex-direction:column;justify-content:space-between;background:var(--dark);color:var(--bg);text-decoration:none;transition:background 0.2s;cursor:none}
+  .featured-main:hover{background:#1c1c1c}
+  .featured-tag{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--acid);margin-bottom:3rem}
+  .featured-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.6rem,3vw,2.6rem);letter-spacing:-0.03em;line-height:1.1;color:var(--bg);margin-bottom:1.25rem}
+  .featured-excerpt{font-size:0.9rem;color:#bbb;line-height:1.7;max-width:520px}
+  .featured-meta{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:#666;margin-top:2.5rem}
+
+  .featured-side{display:flex;flex-direction:column}
+  .featured-side-card{padding:2rem;border-bottom:1.5px solid var(--ink);text-decoration:none;color:var(--ink);display:block;flex:1;transition:background 0.2s;cursor:none}
+  .featured-side-card:last-child{border-bottom:none}
+  .featured-side-card:hover{background:var(--card)}
+  .side-tag{font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--orange);margin-bottom:0.75rem}
+  .side-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1.05rem;letter-spacing:-0.02em;line-height:1.2;margin-bottom:0.5rem}
+  .side-meta{font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-mid);margin-top:0.75rem}
+
+  /* GRID */
+  .articles-section{padding:4rem 3rem;border-bottom:1.5px solid var(--ink)}
+  .articles-grid{display:grid;grid-template-columns:repeat(3,1fr);border:1.5px solid var(--ink);margin-top:2rem}
+  .article-card{padding:2rem;border-right:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink);text-decoration:none;color:var(--ink);display:block;transition:background 0.2s;cursor:none;opacity:0;transform:translateY(12px)}
+  .article-card:nth-child(3n){border-right:none}
+  .article-card:nth-last-child(-n+3){border-bottom:none}
+  .article-card:hover{background:var(--card)}
+  .article-card.visible{animation:fadeUp 0.45s forwards}
+  .article-tag{font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--orange);margin-bottom:1rem}
+  .article-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1.05rem;letter-spacing:-0.02em;line-height:1.25;margin-bottom:0.6rem}
+  .article-excerpt{font-size:0.82rem;color:var(--ink-mid);line-height:1.6}
+  .article-meta{font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-mid);margin-top:1.25rem;padding-top:1rem;border-top:1px solid var(--border);display:flex;justify-content:space-between}
+  .article-read{color:var(--orange)}
+
+  /* CASE STUDIES */
+  .cases-section{padding:4rem 3rem;border-bottom:1.5px solid var(--ink)}
+  .cases-grid{display:grid;grid-template-columns:1fr 1fr;border:1.5px solid var(--ink);margin-top:2rem}
+  .case-card{padding:2.5rem;border-right:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink);text-decoration:none;color:var(--ink);display:block;transition:background 0.2s;cursor:none}
+  .case-card:nth-child(2n){border-right:none}
+  .case-card:nth-last-child(-n+2){border-bottom:none}
+  .case-card:hover{background:var(--card)}
+  .case-industry{font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--ink-mid);margin-bottom:0.75rem}
+  .case-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1.15rem;letter-spacing:-0.02em;line-height:1.2;margin-bottom:0.6rem}
+  .case-body{font-size:0.85rem;color:var(--ink-mid);line-height:1.65}
+  .case-result{display:flex;gap:2rem;margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--border)}
+  .result-item{}
+  .result-val{font-family:'Syne',sans-serif;font-weight:800;font-size:1.5rem;letter-spacing:-0.04em;color:var(--ink)}
+  .result-val em{font-style:normal;color:var(--orange)}
+  .result-label{font-family:'DM Mono',monospace;font-size:0.56rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-mid);margin-top:0.2rem}
+  .case-note{font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--border);margin-top:1rem}
+
+  /* CTA */
+  .cta-strip{background:var(--acid);padding:4rem 3rem;display:flex;align-items:center;justify-content:space-between;gap:2rem}
+  .cta-text{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.4rem,2.5vw,2rem);letter-spacing:-0.03em;line-height:1.1}
+  .cta-sub{font-size:0.875rem;color:var(--ink-mid);margin-top:0.5rem}
+  .cta-btn{font-family:'Syne',sans-serif;font-weight:700;font-size:0.82rem;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;background:var(--ink);color:var(--bg);padding:1rem 2rem;border:1.5px solid var(--ink);white-space:nowrap;cursor:none;transition:background 0.15s;display:inline-block}
+  .cta-btn:hover{background:var(--orange);border-color:var(--orange);color:#fff}
+
+  footer{padding:2rem 3rem;display:flex;justify-content:space-between;align-items:center;border-top:1.5px solid var(--ink)}
+  .footer-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;color:var(--ink)}
+  .footer-logo em{font-style:normal;background:var(--ink);color:var(--acid);padding:0 0.12em}
+  .footer-links{display:flex;gap:2rem;list-style:none}
+  .footer-links a{font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-mid);text-decoration:none;cursor:none}
+  .footer-links a:hover{color:var(--ink)}
+  .footer-note{font-family:'DM Mono',monospace;font-size:0.6rem;color:var(--ink-mid)}
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+  @media(max-width:900px){
+    nav{padding:0 1.5rem}.nav-links,.nav-cta{display:none}
+    .hero,.articles-section,.cases-section,.cta-strip{padding:3rem 1.5rem}
+    .featured{grid-template-columns:1fr}
+    .featured-main{border-right:none;border-bottom:1.5px solid var(--ink)}
+    .articles-grid{grid-template-columns:1fr}
+    .article-card{border-right:none;border-bottom:1.5px solid var(--ink) !important}
+    .article-card:last-child{border-bottom:none !important}
+    .cases-grid{grid-template-columns:1fr}
+    .case-card{border-right:none;border-bottom:1.5px solid var(--ink) !important}
+    .case-card:last-child{border-bottom:none !important}
+    .cta-strip{flex-direction:column;align-items:flex-start}
+    footer{flex-direction:column;gap:1rem;text-align:center;padding:2rem 1.5rem}.footer-links{display:none}
+  }
+</style>
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo">ai<em>ff</em>iciency</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="aifficiency-why.html">Why AI</a></li>
+    <li><a href="aifficiency-pricing.html">Services & Pricing</a></li>
+    <li><a href="aifficiency-about.html">About</a></li>
+    <li><a href="aifficiency-insights.html" class="active">Insights</a></li>
+    <li><a href="aifficiency-contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-cta"><a href="aifficiency-contact.html">Free Scoping Call</a></div>
+</nav>
+
+<section class="hero">
+  <div class="hero-eyebrow">Insights & perspectives</div>
+  <h1>Thinking on <em>AI</em><br>for real businesses</h1>
+  <p class="hero-sub">Practical perspectives on artificial intelligence, automation, and what they actually mean for small and medium sized businesses.</p>
+</section>
+
+<!-- FEATURED -->
+<div class="featured">
+  <a href="#" class="featured-main">
+    <div class="featured-tag">◆ Featured article</div>
+    <div>
+      <div class="featured-title">The five AI opportunities most SMEs are sitting on right now</div>
+      <p class="featured-excerpt">Most businesses don't need cutting-edge AI. They need to automate the things they're already doing manually — and five categories come up again and again. Here's what they are and how to spot them in your own business.</p>
+    </div>
+    <div class="featured-meta">Alex Toppin &nbsp;·&nbsp; 6 min read &nbsp;·&nbsp; June 2025</div>
+  </a>
+  <div class="featured-side">
+    <a href="#" class="featured-side-card">
+      <div class="side-tag">Process</div>
+      <div class="side-title">Why process mapping has to come before AI</div>
+      <div class="side-meta">5 min read &nbsp;·&nbsp; May 2025</div>
+    </a>
+    <a href="#" class="featured-side-card">
+      <div class="side-tag">Business case</div>
+      <div class="side-title">How to build an AI business case your board will actually approve</div>
+      <div class="side-meta">7 min read &nbsp;·&nbsp; May 2025</div>
+    </a>
+    <a href="#" class="featured-side-card">
+      <div class="side-tag">Implementation</div>
+      <div class="side-title">The implementation mistakes that kill good AI projects</div>
+      <div class="side-meta">4 min read &nbsp;·&nbsp; April 2025</div>
+    </a>
+  </div>
+</div>
+
+<!-- ARTICLES -->
+<section class="articles-section">
+  <div class="section-label">// Latest articles</div>
+  <div class="articles-grid">
+
+    <a href="#" class="article-card">
+      <div class="article-tag">Automation</div>
+      <div class="article-title">What "automation" actually means for a 50-person business</div>
+      <div class="article-excerpt">The word gets thrown around constantly. Here's a grounded breakdown of what's realistic, what's not, and where to start.</div>
+      <div class="article-meta"><span>Alex Toppin</span><span class="article-read">5 min →</span></div>
+    </a>
+
+    <a href="#" class="article-card">
+      <div class="article-tag">Tools</div>
+      <div class="article-title">AI tools worth knowing about in 2025 — for businesses that aren't tech companies</div>
+      <div class="article-excerpt">A plain-English guide to the AI tools that are genuinely useful for SME operations, without the hype.</div>
+      <div class="article-meta"><span>Alex Toppin</span><span class="article-read">8 min →</span></div>
+    </a>
+
+    <a href="#" class="article-card">
+      <div class="article-tag">Strategy</div>
+      <div class="article-title">Don't start with the technology. Start with the problem.</div>
+      <div class="article-excerpt">The biggest mistake businesses make when exploring AI is leading with the solution. Here's why the question should always come first.</div>
+      <div class="article-meta"><span>Alex Toppin</span><span class="article-read">4 min →</span></div>
+    </a>
+
+    <a href="#" class="article-card">
+      <div class="article-tag">ROI</div>
+      <div class="article-title">How long does AI actually take to pay back? A realistic look at ROI timelines</div>
+      <div class="article-excerpt">The honest answer: it depends. But there are patterns — and knowing them helps you set realistic expectations before you invest.</div>
+      <div class="article-meta"><span>Alex Toppin</span><span class="article-read">6 min →</span></div>
+    </a>
+
+    <a href="#" class="article-card">
+      <div class="article-tag">People</div>
+      <div class="article-title">AI and your team: how to introduce automation without losing trust</div>
+      <div class="article-excerpt">Change management is the part most AI projects underestimate. Getting your people on board is as important as getting the technology right.</div>
+      <div class="article-meta"><span>Alex Toppin</span><span class="article-read">5 min →</span></div>
+    </a>
+
+    <a href="#" class="article-card">
+      <div class="article-tag">Vendor selection</div>
+      <div class="article-title">How to evaluate an AI vendor without a technical background</div>
+      <div class="article-excerpt">You don't need to be an engineer to ask the right questions. A structured approach to vendor selection that any business leader can use.</div>
+      <div class="article-meta"><span>Alex Toppin</span><span class="article-read">7 min →</span></div>
+    </a>
+
+  </div>
+</section>
+
+
+
+<div class="cta-strip">
+  <div>
+    <div class="cta-text">Want to explore what AI could do for your business?</div>
+    <p class="cta-sub">Start with a free scoping call to find out where the opportunities are.</p>
+  </div>
+  <a href="#" class="cta-btn">Book a free scoping call</a>
+</div>
+
+<footer>
+  <div class="footer-logo">ai<em>ff</em>iciency</div>
+  <ul class="footer-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="aifficiency-why.html">Why AI</a></li>
+    <li><a href="aifficiency-pricing.html">Services</a></li>
+    <li><a href="aifficiency-about.html">About</a></li>
+    <li><a href="aifficiency-insights.html">Insights</a></li>
+  </ul>
+  <div class="footer-note">© 2025 Aifficiency. Helping SMEs unlock efficiencies using AI.</div>
+</footer>
+
+<script>
+  const cursor=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px'});
+  (function loop(){rx+=(mx-rx)*0.14;ry+=(my-ry)*0.14;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop)})();
+  const obs=new IntersectionObserver(entries=>entries.forEach((e,i)=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add('visible'),i*70)}),{threshold:0.1});
+  document.querySelectorAll('.article-card').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

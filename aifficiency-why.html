@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aifficiency — Why AI & Automation</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@300;400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f0ede6;
+    --ink: #111111;
+    --ink-mid: #444444;
+    --acid: #c8ff00;
+    --orange: #ff4800;
+    --card: #e4e1da;
+    --card-dark: #111111;
+    --border: #c0bdb6;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  .cursor {
+    width: 10px; height: 10px;
+    background: var(--orange);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+  }
+  .cursor-ring {
+    width: 32px; height: 32px;
+    border: 1.5px solid var(--orange);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+  }
+
+  /* HEADER */
+  header {
+    padding: 1.75rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1.5px solid var(--ink);
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    z-index: 100;
+  }
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.4rem;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .logo em { font-style: normal; background: var(--ink); color: var(--acid); padding: 0 0.15em; }
+  .nav-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--ink);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  /* MARQUEE */
+  .marquee-wrap {
+    overflow: hidden;
+    border-bottom: 1.5px solid var(--ink);
+    background: var(--ink);
+    padding: 0.7rem 0;
+  }
+  .marquee-inner {
+    display: flex;
+    gap: 2.5rem;
+    white-space: nowrap;
+    animation: marquee 28s linear infinite;
+    width: max-content;
+  }
+  .marquee-inner span {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #666;
+  }
+  .marquee-inner span.accent { color: var(--acid); }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* HERO */
+  .hero {
+    padding: 5rem 3rem 4rem;
+    border-bottom: 1.5px solid var(--ink);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: end;
+  }
+  .hero-left {}
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.2s forwards;
+  }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2.8rem, 5.5vw, 5.5rem);
+    line-height: 0.97;
+    letter-spacing: -0.04em;
+    color: var(--ink);
+    opacity: 0;
+    animation: fadeUp 0.7s 0.3s forwards;
+  }
+  .hero h1 em {
+    font-style: normal;
+    background: var(--ink);
+    color: var(--acid);
+    padding: 0 0.1em;
+    display: inline-block;
+  }
+  .hero-right {
+    opacity: 0;
+    animation: fadeUp 0.7s 0.45s forwards;
+  }
+  .hero-intro {
+    font-size: 1.05rem;
+    color: var(--ink-mid);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+  .hero-stat-row {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1.5px solid var(--border);
+  }
+  .hero-stat {}
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 2.4rem;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    color: var(--ink);
+  }
+  .stat-num span { color: var(--orange); }
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-mid);
+    margin-top: 0.35rem;
+    line-height: 1.4;
+  }
+
+  /* PULL QUOTE */
+  .pull-quote {
+    background: var(--card-dark);
+    color: var(--bg);
+    padding: 4rem 3rem;
+    border-bottom: 1.5px solid var(--ink);
+  }
+  .pull-quote blockquote {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.6rem, 3.5vw, 3rem);
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    max-width: 880px;
+  }
+  .pull-quote blockquote em {
+    font-style: normal;
+    color: var(--acid);
+  }
+  .pull-quote cite {
+    display: block;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #888;
+    margin-top: 1.5rem;
+    font-style: normal;
+  }
+
+  /* REASONS GRID */
+  .reasons-section {
+    padding: 4.5rem 3rem;
+    border-bottom: 1.5px solid var(--ink);
+  }
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-mid);
+    margin-bottom: 2.5rem;
+  }
+  .reasons-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border: 1.5px solid var(--ink);
+  }
+  .reason {
+    padding: 2rem;
+    border-right: 1.5px solid var(--ink);
+    border-bottom: 1.5px solid var(--ink);
+    transition: background 0.2s;
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  .reason:nth-child(3n) { border-right: none; }
+  .reason:nth-child(n+4) { border-bottom: none; }
+  .reason:hover { background: var(--card); }
+  .reason.visible { animation: fadeUp 0.5s forwards; }
+
+  .reason-icon {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    display: block;
+  }
+  .reason-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 0.6rem;
+  }
+  .reason-body {
+    font-size: 0.875rem;
+    color: var(--ink-mid);
+    line-height: 1.65;
+  }
+  .reason-stat {
+    margin-top: 1rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--orange);
+  }
+
+  /* THE COST OF WAITING */
+  .cost-section {
+    padding: 4.5rem 3rem;
+    border-bottom: 1.5px solid var(--ink);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+  .cost-left {
+    padding-right: 3rem;
+    border-right: 1.5px solid var(--ink);
+  }
+  .cost-right { padding-left: 3rem; }
+  .cost-heading {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 1.25rem;
+  }
+  .cost-heading em { font-style: normal; color: var(--orange); }
+  .cost-body {
+    font-size: 0.9rem;
+    color: var(--ink-mid);
+    line-height: 1.75;
+  }
+  .cost-body p + p { margin-top: 1rem; }
+  .cost-list {
+    list-style: none;
+    margin-top: 2rem;
+  }
+  .cost-list li {
+    font-size: 0.875rem;
+    color: var(--ink);
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    line-height: 1.45;
+  }
+  .cost-list li::before {
+    content: '✕';
+    color: var(--orange);
+    font-size: 0.75rem;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+    font-weight: 700;
+  }
+
+  /* SME FOCUS */
+  .sme-section {
+    background: var(--card-dark);
+    color: var(--bg);
+    padding: 4.5rem 3rem;
+    border-bottom: 1.5px solid var(--ink);
+  }
+  .sme-section .section-label { color: #888; }
+  .sme-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-top: 2.5rem;
+  }
+  .sme-heading {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+  .sme-heading em { font-style: normal; color: var(--acid); }
+  .sme-body {
+    font-size: 0.9rem;
+    color: #cccccc;
+    line-height: 1.75;
+  }
+  .sme-body p + p { margin-top: 1rem; }
+  .sme-body strong { color: var(--bg); }
+  .myth-list { list-style: none; margin-top: 2rem; }
+  .myth-item {
+    padding: 1.25rem 0;
+    border-bottom: 1px solid #2e2e2e;
+  }
+  .myth-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 0.35rem;
+  }
+  .myth-label.truth { color: var(--acid); }
+  .myth-text {
+    font-size: 0.875rem;
+    color: #cccccc;
+    line-height: 1.5;
+  }
+  .myth-text.truth-text { color: var(--bg); }
+
+  /* WHERE TO START */
+  .start-section {
+    padding: 4.5rem 3rem;
+    border-bottom: 1.5px solid var(--ink);
+  }
+  .start-steps {
+    margin-top: 2.5rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border: 1.5px solid var(--ink);
+  }
+  .start-step {
+    padding: 2rem;
+    border-right: 1.5px solid var(--ink);
+  }
+  .start-step:last-child { border-right: none; }
+  .start-step-num {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 3rem;
+    letter-spacing: -0.05em;
+    line-height: 1;
+    color: var(--border);
+    margin-bottom: 0.75rem;
+  }
+  .start-step-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--ink);
+    margin-bottom: 0.6rem;
+  }
+  .start-step-body {
+    font-size: 0.875rem;
+    color: var(--ink-mid);
+    line-height: 1.65;
+  }
+
+  /* CTA BANNER */
+  .cta-banner {
+    padding: 4rem 3rem;
+    background: var(--acid);
+    border-bottom: 1.5px solid var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+  .cta-banner-text {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    color: var(--ink);
+  }
+  .cta-banner-btn {
+    display: inline-block;
+    padding: 1rem 2rem;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.82rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    background: var(--ink);
+    color: var(--acid);
+    border: 1.5px solid var(--ink);
+    white-space: nowrap;
+    cursor: none;
+    transition: background 0.2s, color 0.2s;
+  }
+  .cta-banner-btn:hover { background: var(--orange); border-color: var(--orange); color: #fff; }
+
+  /* FOOTER */
+  footer {
+    padding: 2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--ink);
+  }
+  .footer-logo em { font-style: normal; background: var(--ink); color: var(--acid); padding: 0 0.12em; }
+  .footer-note {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--ink-mid);
+    letter-spacing: 0.08em;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 900px) {
+    header, .reasons-section, .cost-section, .sme-section,
+    .start-section, .cta-banner, .pull-quote { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .hero { grid-template-columns: 1fr; padding: 3rem 1.5rem; gap: 2rem; }
+    .reasons-grid { grid-template-columns: 1fr; }
+    .reason { border-right: none; border-bottom: 1.5px solid var(--ink) !important; }
+    .reason:last-child { border-bottom: none !important; }
+    .cost-section { grid-template-columns: 1fr; }
+    .cost-left { padding-right: 0; border-right: none; padding-bottom: 2.5rem; border-bottom: 1.5px solid var(--ink); }
+    .cost-right { padding-left: 0; padding-top: 2.5rem; }
+    .sme-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .start-steps { grid-template-columns: 1fr; }
+    .start-step { border-right: none; border-bottom: 1.5px solid var(--ink); }
+    .start-step:last-child { border-bottom: none; }
+    .cta-banner { flex-direction: column; align-items: flex-start; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav style="padding:0 3rem;display:flex;align-items:stretch;border-bottom:1.5px solid #111;position:sticky;top:0;background:#f0ede6;z-index:200;height:64px;font-family:'DM Sans',sans-serif;">
+  <a href="index.html" style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.35rem;letter-spacing:-0.03em;color:#111;text-decoration:none;display:flex;align-items:center;margin-right:3rem;flex-shrink:0;">ai<em style="font-style:normal;background:#111;color:#c8ff00;padding:0.05em 0.2em;">ff</em>iciency</a>
+  <ul style="display:flex;align-items:stretch;list-style:none;flex:1;">
+    <li style="display:flex;align-items:stretch;"><a href="index.html" style="font-size:0.85rem;font-weight:500;color:#444;text-decoration:none;display:flex;align-items:center;padding:0 1.25rem;">Home</a></li>
+    <li style="display:flex;align-items:stretch;"><a href="aifficiency-why.html" style="font-size:0.85rem;font-weight:700;color:#111;text-decoration:none;display:flex;align-items:center;padding:0 1.25rem;border-left:1.5px solid #111;border-right:1.5px solid #111;">Why AI</a></li>
+    <li style="display:flex;align-items:stretch;"><a href="aifficiency-pricing.html" style="font-size:0.85rem;font-weight:500;color:#444;text-decoration:none;display:flex;align-items:center;padding:0 1.25rem;">Services &amp; Pricing</a></li>
+    <li style="display:flex;align-items:stretch;"><a href="aifficiency-about.html" style="font-size:0.85rem;font-weight:500;color:#444;text-decoration:none;display:flex;align-items:center;padding:0 1.25rem;">About</a></li>
+    <li style="display:flex;align-items:stretch;"><a href="aifficiency-insights.html" style="font-size:0.85rem;font-weight:500;color:#444;text-decoration:none;display:flex;align-items:center;padding:0 1.25rem;">Insights</a></li>
+    <li style="display:flex;align-items:stretch;"><a href="#" style="font-size:0.85rem;font-weight:500;color:#444;text-decoration:none;display:flex;align-items:center;padding:0 1.25rem;">Contact</a></li>
+  </ul>
+  <div style="margin-left:auto;display:flex;align-items:center;"><a href="#" style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.78rem;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;background:#111;color:#f0ede6;padding:0.6rem 1.4rem;border:1.5px solid #111;">Free Scoping Call</a></div>
+</nav>
+
+<div class="marquee-wrap">
+  <div class="marquee-inner">
+    <span class="accent">◆</span><span>The Future Is Already Here</span>
+    <span class="accent">◆</span><span>Your Competitors Are Moving</span>
+    <span class="accent">◆</span><span>Time Is Your Most Valuable Resource</span>
+    <span class="accent">◆</span><span>AI Is Not Just For Enterprise</span>
+    <span class="accent">◆</span><span>Small Teams, Bigger Output</span>
+    <span class="accent">◆</span><span>Stop Doing What Machines Can Do</span>
+    <span class="accent">◆</span><span>The Future Is Already Here</span>
+    <span class="accent">◆</span><span>Your Competitors Are Moving</span>
+    <span class="accent">◆</span><span>Time Is Your Most Valuable Resource</span>
+    <span class="accent">◆</span><span>AI Is Not Just For Enterprise</span>
+    <span class="accent">◆</span><span>Small Teams, Bigger Output</span>
+    <span class="accent">◆</span><span>Stop Doing What Machines Can Do</span>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">The case for AI & automation</div>
+    <h1>This isn't a trend.<br>It's a <em>shift.</em></h1>
+  </div>
+  <div class="hero-right">
+    <p class="hero-intro">Artificial intelligence and automation are no longer emerging technologies reserved for tech giants with unlimited budgets. They are practical, accessible tools that are reshaping how businesses of every size operate — and the gap between those who adopt and those who don't is widening every month.</p>
+    <div class="hero-stat-row">
+      <div class="hero-stat">
+        <div class="stat-num"><span>4×</span></div>
+        <div class="stat-label">Productivity gain reported by SMEs using AI-assisted workflows</div>
+      </div>
+      <div class="hero-stat">
+        <div class="stat-num"><span>72%</span></div>
+        <div class="stat-label">Of business leaders say AI is their top investment priority</div>
+      </div>
+      <div class="hero-stat">
+        <div class="stat-num"><span>£0</span></div>
+        <div class="stat-label">Cost to start understanding where AI fits in your business</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="pull-quote">
+  <blockquote>
+    "AI won't replace your business. But a business <em>using AI</em> very likely will."
+  </blockquote>
+  <cite>— The new competitive reality for SMEs</cite>
+</div>
+
+<section class="reasons-section">
+  <div class="section-label">// Six reasons it matters now</div>
+  <div class="reasons-grid">
+
+    <div class="reason">
+      <span class="reason-icon">⏱</span>
+      <div class="reason-title">Time is your scarcest resource</div>
+      <div class="reason-body">In an SME, everyone wears multiple hats. Repetitive, manual tasks — data entry, scheduling, reporting, chasing invoices — consume hours that could be spent on growth, customers, and strategy. Automation gives that time back.</div>
+      <div class="reason-stat">Up to 40% of daily tasks are automatable</div>
+    </div>
+
+    <div class="reason">
+      <span class="reason-icon">📉</span>
+      <div class="reason-title">Errors cost more than you think</div>
+      <div class="reason-body">Human error in manual processes isn't just embarrassing — it's expensive. Missed orders, incorrect invoices, data discrepancies. Automated processes are consistent, auditable, and don't have bad days.</div>
+      <div class="reason-stat">Manual errors cost UK SMEs billions annually</div>
+    </div>
+
+    <div class="reason">
+      <span class="reason-icon">📈</span>
+      <div class="reason-title">Scale without scaling headcount</div>
+      <div class="reason-body">Traditionally, growth meant hiring. With AI and automation, you can dramatically increase output and capacity without a proportional increase in staff costs — making your business model fundamentally more efficient.</div>
+      <div class="reason-stat">SMEs report 30% cost reduction on automated workflows</div>
+    </div>
+
+    <div class="reason">
+      <span class="reason-icon">🎯</span>
+      <div class="reason-title">Better decisions, faster</div>
+      <div class="reason-body">AI tools can surface patterns in your data that would take analysts weeks to find. From customer behaviour to stock trends to financial forecasting — smarter data means smarter decisions at every level of your business.</div>
+      <div class="reason-stat">Businesses using AI analytics outperform peers by 2.6×</div>
+    </div>
+
+    <div class="reason">
+      <span class="reason-icon">🤝</span>
+      <div class="reason-title">Customer expectations have changed</div>
+      <div class="reason-body">Customers now expect fast responses, personalised experiences, and frictionless service. AI-powered tools — from chatbots to personalised email to smart CRM — let smaller businesses punch well above their weight.</div>
+      <div class="reason-stat">64% of customers expect real-time responses</div>
+    </div>
+
+    <div class="reason">
+      <span class="reason-icon">⚡</span>
+      <div class="reason-title">Your competitors aren't waiting</div>
+      <div class="reason-body">Adoption of AI among SMEs has doubled in the last two years. The businesses moving now are building compounding advantages in efficiency, speed, and cost. Every month of delay is ground ceded to competitors who aren't standing still.</div>
+      <div class="reason-stat">AI adoption among SMEs doubled in 24 months</div>
+    </div>
+
+  </div>
+</section>
+
+<section class="cost-section">
+  <div class="cost-left">
+    <div class="section-label">// The cost of waiting</div>
+    <h2 class="cost-heading">Inaction has a <em>price tag.</em></h2>
+    <div class="cost-body">
+      <p>There's a common assumption that doing nothing is the safe option — that waiting until AI is "more mature" or "better understood" protects the business from risk. The opposite is true.</p>
+      <p>Every month spent on inefficient manual processes is a month of avoidable cost. Every quarter without data-driven insight is a quarter of missed opportunity. The businesses that move early build advantages that are genuinely hard to close.</p>
+    </div>
+  </div>
+  <div class="cost-right">
+    <div class="section-label">// What standing still looks like</div>
+    <ul class="cost-list">
+      <li>Staff spending hours on tasks that could run automatically overnight</li>
+      <li>Decisions made on gut feel because data is too hard to interrogate quickly</li>
+      <li>Customer service bottlenecks that damage satisfaction and retention</li>
+      <li>Competitors with leaner operations undercutting on price or speed</li>
+      <li>Hiring to solve capacity problems that automation would fix for a fraction of the cost</li>
+      <li>Missing market signals because no one has time to analyse them</li>
+      <li>Onboarding new staff to manual processes that shouldn't exist</li>
+    </ul>
+  </div>
+</section>
+
+<section class="sme-section">
+  <div class="section-label">// Built for businesses like yours</div>
+  <div class="sme-grid">
+    <div>
+      <h2 class="sme-heading">AI isn't just for <em>big business.</em></h2>
+      <div class="sme-body">
+        <p>There's a persistent myth that artificial intelligence requires enterprise budgets, dedicated data science teams, and months of implementation. That was true five years ago. It isn't true today.</p>
+        <p>The tools available to SMEs in <strong>2025 are powerful, affordable, and increasingly simple to deploy</strong> — from off-the-shelf AI software that plugs into the tools you already use, to lightweight custom automations that can be built and running within weeks.</p>
+        <p>The real barrier isn't money or technology. It's knowing where to start, which problems are worth solving, and which solutions are actually right for your situation.</p>
+      </div>
+    </div>
+    <div>
+      <div class="section-label" style="color:#888;">// Myths vs reality</div>
+      <ul class="myth-list">
+        <li class="myth-item">
+          <div class="myth-label">Myth</div>
+          <div class="myth-text">"AI is too expensive for a business our size."</div>
+          <div class="myth-label truth" style="margin-top:0.6rem;">Reality</div>
+          <div class="myth-text truth-text">Many AI tools cost less per month than a single software subscription. The ROI often arrives within the first quarter.</div>
+        </li>
+        <li class="myth-item">
+          <div class="myth-label">Myth</div>
+          <div class="myth-text">"We'd need to hire technical people to make it work."</div>
+          <div class="myth-label truth" style="margin-top:0.6rem;">Reality</div>
+          <div class="myth-text truth-text">Most modern AI tools are designed for non-technical users. And where integration is needed, that's exactly what Aifficiency is for.</div>
+        </li>
+        <li class="myth-item">
+          <div class="myth-label">Myth</div>
+          <div class="myth-text">"Our processes are too specific for generic AI tools."</div>
+          <div class="myth-label truth" style="margin-top:0.6rem;">Reality</div>
+          <div class="myth-text truth-text">The best outcomes often come from applying well-established AI capabilities to specific business problems — not building from scratch.</div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="start-section">
+  <div class="section-label">// Where to begin</div>
+  <div class="start-steps">
+    <div class="start-step">
+      <div class="start-step-num">01</div>
+      <div class="start-step-title">Understand your processes</div>
+      <div class="start-step-body">Before you can improve anything, you need a clear picture of how your business actually runs today — where time goes, where errors happen, and where bottlenecks form. This is where every successful AI journey starts.</div>
+    </div>
+    <div class="start-step">
+      <div class="start-step-num">02</div>
+      <div class="start-step-title">Identify the right opportunities</div>
+      <div class="start-step-body">Not everything should be automated. The best opportunities are repetitive, rules-based tasks with high volume or high error rates. Finding them — and prioritising them — is a skill in itself.</div>
+    </div>
+    <div class="start-step">
+      <div class="start-step-num">03</div>
+      <div class="start-step-title">Move with confidence</div>
+      <div class="start-step-body">Armed with a clear diagnosis and a well-researched business case, implementation becomes straightforward. You know what you're building, why you're building it, and what success looks like.</div>
+    </div>
+  </div>
+</section>
+
+<div class="cta-banner">
+  <div class="cta-banner-text">Ready to find out where<br>AI can work for you?</div>
+  <a href="aifficiency-pricing.html" class="cta-banner-btn">See our services →</a>
+</div>
+
+<footer>
+  <div class="footer-logo">ai<em>ff</em>iciency</div>
+  <div class="footer-note">Helping SMEs unlock efficiencies using artificial intelligence</div>
+</footer>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top = my + 'px';
+  });
+  function animateRing() {
+    rx += (mx - rx) * 0.14;
+    ry += (my - ry) * 0.14;
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reason').forEach(r => obs.observe(r));
+</script>
+</body>
+</html>

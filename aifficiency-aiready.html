@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aifficiency — Is AI Right For Me?</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@300;400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--bg:#f0ede6;--ink:#111;--ink-mid:#444;--acid:#c8ff00;--orange:#ff4800;--card:#e4e1da;--dark:#111;--border:#c0bdb6;--green:#1a7a3c;--red:#cc2200}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;overflow-x:hidden;cursor:none}
+  .cursor{width:10px;height:10px;background:var(--orange);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
+  .cursor-ring{width:32px;height:32px;border:1.5px solid var(--orange);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%)}
+  nav{padding:0 3rem;display:flex;align-items:stretch;border-bottom:1.5px solid var(--ink);position:sticky;top:0;background:var(--bg);z-index:200;height:64px}
+  .nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.35rem;letter-spacing:-0.03em;color:var(--ink);text-decoration:none;display:flex;align-items:center;margin-right:3rem;flex-shrink:0}
+  .nav-logo em{font-style:normal;background:var(--ink);color:var(--acid);padding:0.05em 0.2em}
+  .nav-links{display:flex;align-items:stretch;list-style:none;flex:1}
+  .nav-links li{display:flex;align-items:stretch}
+  .nav-links a{font-size:0.85rem;font-weight:500;color:var(--ink-mid);text-decoration:none;display:flex;align-items:center;padding:0 1.25rem;transition:color 0.15s,background 0.15s}
+  .nav-links a:hover{color:var(--ink);background:var(--card)}
+  .nav-links a.active{font-weight:700;color:var(--ink);border-left:1.5px solid var(--ink);border-right:1.5px solid var(--ink)}
+  .nav-cta{margin-left:auto;display:flex;align-items:center}
+  .nav-cta a{font-family:'Syne',sans-serif;font-weight:700;font-size:0.78rem;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;background:var(--ink);color:var(--bg);padding:0.6rem 1.4rem;border:1.5px solid var(--ink);transition:background 0.15s;cursor:none}
+  .nav-cta a:hover{background:var(--orange);border-color:var(--orange);color:#fff}
+  .section-label{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-mid);margin-bottom:1.5rem}
+
+  .hero{padding:5rem 3rem 4rem;border-bottom:1.5px solid var(--ink);display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+  .hero-eyebrow{font-family:'DM Mono',monospace;font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--orange);margin-bottom:1.5rem;opacity:0;animation:fadeUp 0.5s 0.1s forwards}
+  .hero h1{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2.8rem,5vw,5rem);letter-spacing:-0.04em;line-height:0.96;opacity:0;animation:fadeUp 0.6s 0.25s forwards}
+  .hero h1 em{font-style:normal;background:var(--ink);color:var(--acid);padding:0 0.1em}
+  .hero-right{opacity:0;animation:fadeUp 0.6s 0.4s forwards}
+  .hero-sub{font-size:1rem;color:var(--ink-mid);line-height:1.75}
+
+  /* QUIZ */
+  .quiz-section{padding:4rem 3rem;border-bottom:1.5px solid var(--ink)}
+  .quiz-intro{max-width:640px;font-size:0.95rem;color:var(--ink-mid);line-height:1.75;margin-bottom:3rem}
+  .quiz-intro strong{color:var(--ink)}
+
+  .quiz-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1.5px solid var(--ink)}
+  .quiz-item{padding:1.75rem;border-right:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink);display:flex;gap:1.25rem;align-items:flex-start}
+  .quiz-item:nth-child(2n){border-right:none}
+  .quiz-item:nth-last-child(-n+2){border-bottom:none}
+
+  .quiz-check{width:22px;height:22px;border:1.5px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-top:0.1rem;cursor:none;transition:background 0.15s,border-color 0.15s;position:relative}
+  .quiz-check.checked{background:var(--ink);border-color:var(--ink)}
+  .quiz-check.checked::after{content:'✓';color:var(--acid);font-size:0.75rem;font-weight:700}
+  .quiz-item-body{}
+  .quiz-item-q{font-size:0.9rem;font-weight:600;color:var(--ink);margin-bottom:0.3rem;line-height:1.35}
+  .quiz-item-hint{font-size:0.78rem;color:var(--ink-mid);line-height:1.5}
+
+  .quiz-submit{margin-top:2.5rem;display:flex;gap:1rem;align-items:center}
+  .quiz-btn{font-family:'Syne',sans-serif;font-weight:700;font-size:0.82rem;letter-spacing:0.06em;text-transform:uppercase;background:var(--ink);color:var(--bg);padding:0.9rem 1.75rem;border:1.5px solid var(--ink);cursor:none;transition:background 0.15s}
+  .quiz-btn:hover{background:var(--orange);border-color:var(--orange)}
+  .quiz-reset{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-mid);cursor:none;background:none;border:none;padding:0}
+  .quiz-reset:hover{color:var(--ink)}
+
+  /* RESULT */
+  .result-box{display:none;margin-top:2.5rem;padding:2.5rem;border:1.5px solid var(--ink)}
+  .result-box.show{display:block}
+  .result-box.strong{background:var(--ink);color:var(--bg)}
+  .result-box.moderate{background:var(--card)}
+  .result-box.early{background:var(--bg)}
+  .result-score{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.75rem}
+  .result-box.strong .result-score{color:#aaa}
+  .result-box.moderate .result-score,.result-box.early .result-score{color:var(--ink-mid)}
+  .result-heading{font-family:'Syne',sans-serif;font-weight:800;font-size:1.7rem;letter-spacing:-0.03em;line-height:1.1;margin-bottom:0.75rem}
+  .result-box.strong .result-heading{color:var(--acid)}
+  .result-body{font-size:0.9rem;line-height:1.75;margin-bottom:1.5rem}
+  .result-box.strong .result-body{color:#ccc}
+  .result-box.moderate .result-body,.result-box.early .result-body{color:var(--ink-mid)}
+  .result-cta{font-family:'Syne',sans-serif;font-weight:700;font-size:0.78rem;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;display:inline-block;padding:0.85rem 1.6rem;cursor:none;transition:background 0.15s}
+  .result-box.strong .result-cta{background:var(--acid);color:var(--ink);border:1.5px solid var(--acid)}
+  .result-box.strong .result-cta:hover{background:#b0e000}
+  .result-box.moderate .result-cta,.result-box.early .result-cta{background:var(--ink);color:var(--bg);border:1.5px solid var(--ink)}
+  .result-box.moderate .result-cta:hover,.result-box.early .result-cta:hover{background:var(--orange);border-color:var(--orange);color:#fff}
+
+  /* SIGNALS */
+  .signals-section{display:grid;grid-template-columns:1fr 1fr;border-bottom:1.5px solid var(--ink)}
+  .signals-col{padding:4rem 3rem;border-right:1.5px solid var(--ink)}
+  .signals-col:last-child{border-right:none}
+  .signals-heading{font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;letter-spacing:-0.02em;line-height:1.15;margin-bottom:2rem}
+  .signals-heading em{font-style:normal}
+  .signal-list{list-style:none}
+  .signal-item{padding:0.9rem 0;border-bottom:1px solid var(--border);font-size:0.875rem;color:var(--ink-mid);display:flex;gap:0.75rem;align-items:flex-start;line-height:1.5}
+  .signal-item:first-child{border-top:1px solid var(--border)}
+  .sig-icon{flex-shrink:0;font-weight:700;margin-top:0.05rem}
+  .sig-yes .sig-icon{color:#1a7a3c}
+  .sig-no .sig-icon{color:var(--red)}
+
+  /* NOT RIGHT */
+  .not-right{background:var(--dark);color:var(--bg);padding:4rem 3rem;border-bottom:1.5px solid var(--ink)}
+  .not-right .section-label{color:#888}
+  .not-right-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;margin-top:2rem}
+  .not-right-heading{font-family:'Syne',sans-serif;font-weight:800;font-size:1.6rem;letter-spacing:-0.03em;line-height:1.1}
+  .not-right-heading em{font-style:normal;color:var(--acid)}
+  .not-right-body{font-size:0.875rem;color:#bbb;line-height:1.8;margin-top:1rem}
+  .caveat-list{list-style:none}
+  .caveat-item{padding:0.9rem 0;border-bottom:1px solid #2e2e2e;font-size:0.875rem;color:#bbb;display:flex;gap:0.75rem;align-items:flex-start;line-height:1.5}
+  .caveat-item:first-child{border-top:1px solid #2e2e2e}
+  .caveat-item::before{content:'–';color:#555;flex-shrink:0}
+
+  /* CTA */
+  .cta-strip{background:var(--acid);padding:4rem 3rem;display:flex;align-items:center;justify-content:space-between;gap:2rem}
+  .cta-text{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.4rem,2.5vw,2rem);letter-spacing:-0.03em;line-height:1.1}
+  .cta-sub{font-size:0.875rem;color:var(--ink-mid);margin-top:0.5rem}
+  .cta-btn{font-family:'Syne',sans-serif;font-weight:700;font-size:0.82rem;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;background:var(--ink);color:var(--bg);padding:1rem 2rem;border:1.5px solid var(--ink);white-space:nowrap;cursor:none;transition:background 0.15s;display:inline-block}
+  .cta-btn:hover{background:var(--orange);border-color:var(--orange);color:#fff}
+
+  footer{padding:2rem 3rem;display:flex;justify-content:space-between;align-items:center;border-top:1.5px solid var(--ink)}
+  .footer-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;color:var(--ink)}
+  .footer-logo em{font-style:normal;background:var(--ink);color:var(--acid);padding:0 0.12em}
+  .footer-links{display:flex;gap:2rem;list-style:none}
+  .footer-links a{font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-mid);text-decoration:none;cursor:none}
+  .footer-links a:hover{color:var(--ink)}
+  .footer-note{font-family:'DM Mono',monospace;font-size:0.6rem;color:var(--ink-mid)}
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+  @media(max-width:900px){
+    nav{padding:0 1.5rem}.nav-links,.nav-cta{display:none}
+    .hero{grid-template-columns:1fr;padding:3rem 1.5rem;gap:1.5rem}
+    .quiz-section{padding:3rem 1.5rem}
+    .quiz-grid{grid-template-columns:1fr}
+    .quiz-item{border-right:none;border-bottom:1.5px solid var(--ink) !important}
+    .quiz-item:last-child{border-bottom:none !important}
+    .signals-section{grid-template-columns:1fr}
+    .signals-col{border-right:none;border-bottom:1.5px solid var(--ink);padding:3rem 1.5rem}
+    .signals-col:last-child{border-bottom:none}
+    .not-right{padding:3rem 1.5rem}
+    .not-right-grid{grid-template-columns:1fr;gap:2rem}
+    .cta-strip{flex-direction:column;align-items:flex-start;padding:3rem 1.5rem}
+    footer{flex-direction:column;gap:1rem;text-align:center;padding:2rem 1.5rem}.footer-links{display:none}
+  }
+</style>
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo">ai<em>ff</em>iciency</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="aifficiency-why.html">Why AI</a></li>
+    <li><a href="aifficiency-pricing.html">Services & Pricing</a></li>
+    <li><a href="aifficiency-about.html">About</a></li>
+    <li><a href="aifficiency-insights.html">Insights</a></li>
+    <li><a href="aifficiency-contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-cta"><a href="aifficiency-contact.html">Free Scoping Call</a></div>
+</nav>
+
+<section class="hero">
+  <div>
+    <div class="hero-eyebrow">Self-assessment</div>
+    <h1>Is <em>AI</em> right<br>for my business?</h1>
+  </div>
+  <div class="hero-right">
+    <p class="hero-sub">Not every business is ready for AI — and not every problem needs it. This page will help you think honestly about whether AI is likely to add value in your business, and if so, where to look first.</p>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section class="quiz-section">
+  <div class="section-label">// Quick assessment — tick everything that applies</div>
+  <p class="quiz-intro">Go through the checklist below and tick the statements that are genuinely true for your business. Be honest — this is for your benefit, not ours. <strong>The more you tick, the stronger the case for exploring AI.</strong></p>
+
+  <div class="quiz-grid" id="quizGrid">
+    <div class="quiz-item">
+      <div class="quiz-check" data-val="1"></div>
+      <div class="quiz-item-body">
+        <div class="quiz-item-q">We have tasks that repeat on a daily or weekly basis</div>
+        <div class="quiz-item-hint">Data entry, reporting, scheduling, invoicing, chasing — anything that happens regularly and follows a pattern.</div>
+      </div>
+    </div>
+    <div class="quiz-item">
+      <div class="quiz-check" data-val="1"></div>
+      <div class="quiz-item-body">
+        <div class="quiz-item-q">Manual errors cost us time or money to fix</div>
+        <div class="quiz-item-hint">Mistakes in orders, invoices, reports, or data that have to be caught and corrected.</div>
+      </div>
+    </div>
+    <div class="quiz-item">
+      <div class="quiz-check" data-val="1"></div>
+      <div class="quiz-item-body">
+        <div class="quiz-item-q">We struggle to get useful insight from our data</div>
+        <div class="quiz-item-hint">Data sits in spreadsheets or systems that are hard to interrogate. Decisions are made on gut feel more often than they should be.</div>
+      </div>
+    </div>
+    <div class="quiz-item">
+      <div class="quiz-check" data-val="1"></div>
+      <div class="quiz-item-body">
+        <div class="quiz-item-q">Our team spends time on low-value admin</div>
+        <div class="quiz-item-hint">Capable people doing work that doesn't really need them — because there's no other way to get it done.</div>
+      </div>
+    </div>
+    <div class="quiz-item">
+      <div class="quiz-check" data-val="1"></div>
+      <div class="quiz-item-body">
+        <div class="quiz-item-q">We handle a high volume of similar customer enquiries</div>
+        <div class="quiz-item-hint">Tracking, status updates, FAQs, appointment requests — things that follow predictable patterns.</div>
+      </div>
+    </div>
+    <div class="quiz-item">
+      <div class="quiz-check" data-val="1"></div>
+      <div class="quiz-item-body">
+        <div class="quiz-item-q">We find it hard to scale output without scaling headcount</div>
+        <div class="quiz-item-hint">Growth means hiring. More customers means more staff to service them. The model doesn't improve with scale.</div>
+      </div>
+    </div>
+    <div class="quiz-item">
+      <div class="quiz-check" data-val="1"></div>
+      <div class="quiz-item-body">
+        <div class="quiz-item-q">We produce regular documents, reports, or communications that follow a template</div>
+        <div class="quiz-item-hint">Weekly reports, client updates, proposals, invoices — anything produced repeatedly from the same structure.</div>
+      </div>
+    </div>
+    <div class="quiz-item">
+      <div class="quiz-check" data-val="1"></div>
+      <div class="quiz-item-body">
+        <div class="quiz-item-q">We have processes that involve moving data between systems manually</div>
+        <div class="quiz-item-hint">Copy-pasting between spreadsheets, systems, or platforms. Information that doesn't flow automatically.</div>
+      </div>
+    </div>
+    <div class="quiz-item">
+      <div class="quiz-check" data-val="2"></div>
+      <div class="quiz-item-body">
+        <div class="quiz-item-q">Leadership has appetite to invest in improving the way we operate</div>
+        <div class="quiz-item-hint">AI projects need buy-in to succeed. If the business is resistant to change, even the best opportunity won't land.</div>
+      </div>
+    </div>
+    <div class="quiz-item">
+      <div class="quiz-check" data-val="2"></div>
+      <div class="quiz-item-body">
+        <div class="quiz-item-q">We have at least one process where inefficiency is causing a real, visible problem</div>
+        <div class="quiz-item-hint">A clear, felt pain point — not a vague desire to be more efficient. The best AI projects solve specific problems.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="quiz-submit">
+    <button class="quiz-btn" onclick="scoreQuiz()">See my result</button>
+    <button class="quiz-reset" onclick="resetQuiz()">Reset</button>
+  </div>
+
+  <div class="result-box" id="resultBox">
+    <div class="result-score" id="resultScore"></div>
+    <div class="result-heading" id="resultHeading"></div>
+    <div class="result-body" id="resultBody"></div>
+    <a href="#" class="result-cta" id="resultCta"></a>
+  </div>
+</section>
+
+<!-- GOOD SIGNALS / BAD SIGNALS -->
+<section class="signals-section">
+  <div class="signals-col">
+    <div class="section-label">// Strong signals AI will help</div>
+    <h2 class="signals-heading" style="color:var(--ink)">Your business is <em style="color:#1a7a3c">well-placed</em> if...</h2>
+    <ul class="signal-list" style="margin-top:1.5rem">
+      <li class="signal-item sig-yes"><span class="sig-icon">✓</span><span>You have high-volume, repetitive processes that follow consistent rules</span></li>
+      <li class="signal-item sig-yes"><span class="sig-icon">✓</span><span>You can clearly describe what "good" looks like for the process</span></li>
+      <li class="signal-item sig-yes"><span class="sig-icon">✓</span><span>You have data — even messy data — that records what's happening in your business</span></li>
+      <li class="signal-item sig-yes"><span class="sig-icon">✓</span><span>Leadership is willing to invest time as well as money in making change happen</span></li>
+      <li class="signal-item sig-yes"><span class="sig-icon">✓</span><span>You have a specific, felt pain point — not just a general desire to be "more efficient"</span></li>
+      <li class="signal-item sig-yes"><span class="sig-icon">✓</span><span>You're open to changing how work gets done, not just adding a tool on top of existing processes</span></li>
+    </ul>
+  </div>
+  <div class="signals-col">
+    <div class="section-label">// Signs it might not be the right time</div>
+    <h2 class="signals-heading" style="color:var(--ink)">It's worth <em style="color:var(--orange)">pausing</em> if...</h2>
+    <ul class="signal-list" style="margin-top:1.5rem">
+      <li class="signal-item sig-no"><span class="sig-icon">✕</span><span>Your core processes aren't documented and no one fully understands them end-to-end</span></li>
+      <li class="signal-item sig-no"><span class="sig-icon">✕</span><span>Leadership isn't aligned on the need to change — the project will stall without buy-in</span></li>
+      <li class="signal-item sig-no"><span class="sig-icon">✕</span><span>You're in the middle of significant structural change (new systems, a merger, a restructure)</span></li>
+      <li class="signal-item sig-no"><span class="sig-icon">✕</span><span>The business doesn't capture any data about its operations — AI needs something to work with</span></li>
+      <li class="signal-item sig-no"><span class="sig-icon">✕</span><span>You want AI as a silver bullet for a deeper organisational or commercial problem</span></li>
+      <li class="signal-item sig-no"><span class="sig-icon">✕</span><span>The budget simply isn't there — rushed, underfunded AI projects rarely deliver</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- NOT RIGHT FOR EVERYONE -->
+<section class="not-right">
+  <div class="section-label">// Honesty matters</div>
+  <div class="not-right-grid">
+    <div>
+      <h2 class="not-right-heading">AI isn't the<br>answer to <em>everything.</em></h2>
+      <p class="not-right-body">We'd rather tell you early that AI isn't the right fit than take you through a full engagement and deliver something that doesn't make a real difference. If the Discover process reveals that a simpler process change, a better spreadsheet, or a different tool would solve the problem — we'll say so.</p>
+    </div>
+    <div>
+      <div class="section-label" style="color:#888">// Common situations where AI isn't the answer</div>
+      <ul class="caveat-list">
+        <li class="caveat-item">The process is too bespoke or judgment-heavy to automate reliably</li>
+        <li class="caveat-item">The problem is actually a people or management issue, not a process one</li>
+        <li class="caveat-item">A simpler fix — a better system, a clearer SOP — would solve it faster and cheaper</li>
+        <li class="caveat-item">The volume or frequency of the task doesn't justify the investment</li>
+        <li class="caveat-item">The data needed to train or power an AI tool simply doesn't exist yet</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="cta-strip">
+  <div>
+    <div class="cta-text">Not sure where you stand?</div>
+    <p class="cta-sub">A free scoping call is the fastest way to get an honest answer specific to your business.</p>
+  </div>
+  <a href="#" class="cta-btn">Book a free scoping call</a>
+</div>
+
+<footer>
+  <div class="footer-logo">ai<em>ff</em>iciency</div>
+  <ul class="footer-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="aifficiency-why.html">Why AI</a></li>
+    <li><a href="aifficiency-pricing.html">Services</a></li>
+    <li><a href="aifficiency-about.html">About</a></li>
+    <li><a href="aifficiency-insights.html">Insights</a></li>
+  </ul>
+  <div class="footer-note">© 2025 Aifficiency. Helping SMEs unlock efficiencies using AI.</div>
+</footer>
+
+<script>
+  const cursor=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px'});
+  (function loop(){rx+=(mx-rx)*0.14;ry+=(my-ry)*0.14;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop)})();
+
+  document.querySelectorAll('.quiz-check').forEach(box=>{
+    box.addEventListener('click',()=>box.classList.toggle('checked'));
+  });
+
+  function scoreQuiz(){
+    const boxes=document.querySelectorAll('.quiz-check');
+    let score=0,max=0;
+    boxes.forEach(b=>{const v=parseInt(b.dataset.val);max+=v;if(b.classList.contains('checked'))score+=v;});
+    const pct=score/max;
+    const rb=document.getElementById('resultBox');
+    const rs=document.getElementById('resultScore');
+    const rh=document.getElementById('resultHeading');
+    const rbody=document.getElementById('resultBody');
+    const rc=document.getElementById('resultCta');
+    rb.className='result-box show';
+    rs.textContent=`You scored ${score} out of ${max}`;
+    if(pct>=0.7){
+      rb.classList.add('strong');
+      rh.textContent='Strong fit — there are likely real opportunities here.';
+      rbody.textContent='Based on your answers, your business has several characteristics that typically make AI a strong investment. There are almost certainly specific processes worth exploring — and the starting point is getting a clear picture of exactly where. That\'s what our Discover engagement is designed to do.';
+      rc.textContent='Book a free scoping call →';rc.href='#';
+    } else if(pct>=0.4){
+      rb.classList.add('moderate');
+      rh.textContent='Moderate fit — worth exploring further.';
+      rbody.textContent='There are signals here that AI could help, but it\'s not clear-cut from this assessment alone. The honest answer is: it depends on the specifics. A free scoping call would help clarify whether there\'s a genuine opportunity worth pursuing — and if so, where.';
+      rc.textContent='Let\'s find out — book a scoping call →';rc.href='#';
+    } else {
+      rb.classList.add('early');
+      rh.textContent='Early days — this might not be the right moment.';
+      rbody.textContent='Based on your answers, AI might not be the highest-priority investment right now. That\'s not a bad thing — it\'s better to know early. If you\'d like to talk through your situation, a free scoping call costs nothing and gives you an honest view. We\'ll tell you straight if we don\'t think we can help.';
+      rc.textContent='Talk it through anyway →';rc.href='#';
+    }
+    rb.scrollIntoView({behavior:'smooth',block:'nearest'});
+  }
+
+  function resetQuiz(){
+    document.querySelectorAll('.quiz-check').forEach(b=>b.classList.remove('checked'));
+    const rb=document.getElementById('resultBox');
+    rb.className='result-box';
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aifficiency — Services & Pricing</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@300;400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f0ede6;
+    --ink: #111111;
+    --ink-mid: #333333;
+    --acid: #c8ff00;
+    --orange: #ff4800;
+    --card: #e4e1da;
+    --card-dark: #111111;
+    --border: #c0bdb6;
+    --highlight: #c8ff00;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  .cursor {
+    width: 10px; height: 10px;
+    background: var(--orange);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+  }
+  .cursor-ring {
+    width: 32px; height: 32px;
+    border: 1.5px solid var(--orange);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: left 0.1s ease, top 0.1s ease;
+  }
+
+  /* HEADER */
+  header {
+    padding: 1.75rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1.5px solid var(--ink);
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    z-index: 100;
+  }
+
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.4rem;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+  }
+  .logo em {
+    font-style: normal;
+    background: var(--ink);
+    color: var(--acid);
+    padding: 0 0.15em;
+  }
+
+  .tagline {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--ink);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  /* MARQUEE */
+  .marquee-wrap {
+    overflow: hidden;
+    border-bottom: 1.5px solid var(--ink);
+    background: var(--ink);
+    padding: 0.7rem 0;
+  }
+  .marquee-inner {
+    display: flex;
+    gap: 2.5rem;
+    white-space: nowrap;
+    animation: marquee 22s linear infinite;
+    width: max-content;
+  }
+  .marquee-inner span {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #888;
+  }
+  .marquee-inner span.accent { color: var(--acid); }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* HERO */
+  .hero {
+    padding: 5rem 3rem 4rem;
+    border-bottom: 1.5px solid var(--ink);
+  }
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-mid);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.2s forwards;
+  }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(3.2rem, 7vw, 6.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    max-width: 880px;
+    color: var(--ink);
+    opacity: 0;
+    animation: fadeUp 0.7s 0.3s forwards;
+  }
+  .hero h1 em {
+    font-style: normal;
+    background: var(--ink);
+    color: var(--acid);
+    padding: 0 0.12em;
+    display: inline-block;
+  }
+  .hero-sub {
+    margin-top: 2rem;
+    font-size: 1.05rem;
+    color: var(--ink-mid);
+    max-width: 520px;
+    line-height: 1.65;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.45s forwards;
+  }
+
+  /* PROCESS STRIP */
+  .process-strip {
+    display: flex;
+    border-bottom: 1.5px solid var(--ink);
+  }
+  .process-step {
+    flex: 1;
+    padding: 1.1rem 2rem;
+    border-right: 1.5px solid var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    transition: background 0.2s;
+  }
+  .process-step:last-child { border-right: none; }
+  .process-step:hover { background: var(--card); }
+  .step-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--orange);
+    font-weight: 500;
+  }
+  .step-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+
+  /* TIERS */
+  .tiers-section {
+    padding: 4rem 3rem 5rem;
+    border-bottom: 1.5px solid var(--ink);
+  }
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-mid);
+    margin-bottom: 2.5rem;
+  }
+  .tiers-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border: 1.5px solid var(--ink);
+  }
+  .tier {
+    padding: 2.25rem;
+    border-right: 1.5px solid var(--ink);
+    background: var(--bg);
+    transition: background 0.25s;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  .tier:last-child { border-right: none; }
+  .tier.visible { animation: fadeUp 0.55s forwards; }
+  .tier:nth-child(2).visible { animation-delay: 0.1s; }
+  .tier:nth-child(3).visible { animation-delay: 0.2s; }
+  .tier:hover { background: var(--card); }
+
+  /* Dark card for Evaluate */
+  .tier-dark {
+    background: var(--card-dark);
+    color: #f0ede6;
+  }
+  .tier-dark:hover { background: #1e1e1e; }
+  .tier-dark .tier-name,
+  .tier-dark .tier-tagline,
+  .tier-dark .tier-num,
+  .tier-dark .price,
+  .tier-dark .price-label,
+  .tier-dark .price-note,
+  .tier-dark .tier-duration { color: #f0ede6; }
+  .tier-dark .tier-deliverables li { color: #f0ede6; border-bottom-color: #2e2e2e; }
+  .tier-dark .tier-tagline { border-bottom-color: #2e2e2e; }
+  .tier-dark .tier-duration { border-top-color: #2e2e2e; }
+  .tier-dark .price sub { color: #aaaaaa; }
+
+  .tier-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.28rem 0.65rem;
+    border: 1.5px solid var(--ink);
+    color: var(--ink);
+    display: inline-block;
+    margin-bottom: 1.5rem;
+  }
+  .tier-dark .tier-badge {
+    border-color: #555;
+    color: #aaa;
+  }
+  .tier-badge.orange {
+    border-color: var(--orange);
+    color: var(--orange);
+  }
+  .tier-badge.acid {
+    background: var(--acid);
+    border-color: var(--acid);
+    color: var(--ink);
+  }
+
+  .tier-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--ink-mid);
+    margin-bottom: 0.4rem;
+  }
+  .tier-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 2.1rem;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: var(--ink);
+    margin-bottom: 0.7rem;
+  }
+  .tier-tagline {
+    font-size: 0.85rem;
+    color: var(--ink-mid);
+    line-height: 1.55;
+    margin-bottom: 1.75rem;
+    padding-bottom: 1.75rem;
+    border-bottom: 1.5px solid var(--border);
+  }
+  .tier-dark .tier-tagline { color: #cccccc; }
+
+  .price-block { margin-bottom: 1.75rem; }
+  .price-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-mid);
+    margin-bottom: 0.35rem;
+  }
+  .price {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 2.6rem;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    color: var(--ink);
+  }
+  .price sub {
+    font-size: 0.95rem;
+    font-weight: 400;
+    vertical-align: baseline;
+    color: var(--ink-mid);
+  }
+  .price-note {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--ink-mid);
+    margin-top: 0.4rem;
+  }
+
+  .tier-deliverables { list-style: none; margin-bottom: 2rem; }
+  .tier-deliverables li {
+    font-size: 0.875rem;
+    color: var(--ink);
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+    line-height: 1.4;
+  }
+  .tier-deliverables li::before {
+    content: '→';
+    color: var(--orange);
+    font-size: 0.75rem;
+    margin-top: 0.05rem;
+    flex-shrink: 0;
+  }
+  .tier-dark .tier-deliverables li::before { color: var(--acid); }
+
+  .tier-duration {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--ink-mid);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding-top: 1.25rem;
+    border-top: 1.5px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .duration-val { color: var(--ink); font-weight: 500; }
+  .tier-dark .duration-val { color: #f0ede6; }
+
+  /* CTA */
+  .cta-btn {
+    display: block;
+    margin-top: 1.5rem;
+    padding: 0.9rem 1.5rem;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    text-align: center;
+    background: var(--ink);
+    color: var(--bg);
+    border: 1.5px solid var(--ink);
+    transition: background 0.2s, color 0.2s;
+    cursor: none;
+  }
+  .cta-btn:hover { background: var(--orange); border-color: var(--orange); color: #fff; }
+  .cta-btn.light {
+    background: var(--acid);
+    color: var(--ink);
+    border-color: var(--acid);
+  }
+  .cta-btn.light:hover { background: #b0e000; border-color: #b0e000; color: var(--ink); }
+  .cta-btn.outline-light {
+    background: transparent;
+    color: #f0ede6;
+    border-color: #555;
+  }
+  .cta-btn.outline-light:hover { background: var(--acid); color: var(--ink); border-color: var(--acid); }
+
+  /* HOW */
+  .how-section {
+    padding: 4.5rem 3rem;
+    border-bottom: 1.5px solid var(--ink);
+  }
+  .how-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-top: 2.5rem;
+  }
+  .how-intro {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.7rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
+    color: var(--ink);
+  }
+  .how-intro em {
+    font-style: normal;
+    background: var(--ink);
+    color: var(--acid);
+    padding: 0 0.1em;
+  }
+  .how-detail { font-size: 0.9rem; color: var(--ink-mid); line-height: 1.8; }
+  .how-detail p + p { margin-top: 1rem; }
+  .how-detail strong { color: var(--ink); font-weight: 500; }
+
+  /* FAQ */
+  .faq-section { padding: 4.5rem 3rem; border-bottom: 1.5px solid var(--ink); }
+  .faq-list { margin-top: 2.5rem; }
+  .faq-item { border-bottom: 1.5px solid var(--ink); }
+  .faq-q {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.4rem 0;
+    color: var(--ink);
+  }
+  .faq-q .toggle { font-size: 1.3rem; color: var(--orange); transition: transform 0.2s; flex-shrink: 0; }
+  .faq-a {
+    font-size: 0.875rem;
+    color: var(--ink-mid);
+    line-height: 1.75;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease, padding 0.2s;
+  }
+  .faq-item.open .faq-a { max-height: 200px; padding-bottom: 1.25rem; }
+  .faq-item.open .toggle { transform: rotate(45deg); }
+
+  /* FOOTER */
+  footer {
+    padding: 2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--ink);
+  }
+  .footer-logo em { font-style: normal; background: var(--ink); color: var(--acid); padding: 0 0.12em; }
+  .footer-note {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--ink-mid);
+    letter-spacing: 0.08em;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 900px) {
+    header, .hero, .tiers-section, .how-section, .faq-section { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .tiers-grid { grid-template-columns: 1fr; }
+    .tier { border-right: none; border-bottom: 1.5px solid var(--ink); }
+    .tier:last-child { border-bottom: none; }
+    .process-strip { flex-direction: column; }
+    .process-step { border-right: none; border-bottom: 1.5px solid var(--ink); }
+    .how-grid { grid-template-columns: 1fr; gap: 2rem; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav style="padding:0 3rem;display:flex;align-items:stretch;border-bottom:1.5px solid #111;position:sticky;top:0;background:#f0ede6;z-index:200;height:64px;font-family:'DM Sans',sans-serif;">
+  <a href="index.html" style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.35rem;letter-spacing:-0.03em;color:#111;text-decoration:none;display:flex;align-items:center;margin-right:3rem;flex-shrink:0;">ai<em style="font-style:normal;background:#111;color:#c8ff00;padding:0.05em 0.2em;">ff</em>iciency</a>
+  <ul style="display:flex;align-items:stretch;list-style:none;flex:1;">
+    <li style="display:flex;align-items:stretch;"><a href="index.html" style="font-size:0.85rem;font-weight:500;color:#444;text-decoration:none;display:flex;align-items:center;padding:0 1.25rem;">Home</a></li>
+    <li style="display:flex;align-items:stretch;"><a href="aifficiency-why.html" style="font-size:0.85rem;font-weight:500;color:#444;text-decoration:none;display:flex;align-items:center;padding:0 1.25rem;">Why AI</a></li>
+    <li style="display:flex;align-items:stretch;"><a href="aifficiency-pricing.html" style="font-size:0.85rem;font-weight:700;color:#111;text-decoration:none;display:flex;align-items:center;padding:0 1.25rem;border-left:1.5px solid #111;border-right:1.5px solid #111;">Services &amp; Pricing</a></li>
+    <li style="display:flex;align-items:stretch;"><a href="aifficiency-about.html" style="font-size:0.85rem;font-weight:500;color:#444;text-decoration:none;display:flex;align-items:center;padding:0 1.25rem;">About</a></li>
+    <li style="display:flex;align-items:stretch;"><a href="aifficiency-insights.html" style="font-size:0.85rem;font-weight:500;color:#444;text-decoration:none;display:flex;align-items:center;padding:0 1.25rem;">Insights</a></li>
+    <li style="display:flex;align-items:stretch;"><a href="#" style="font-size:0.85rem;font-weight:500;color:#444;text-decoration:none;display:flex;align-items:center;padding:0 1.25rem;">Contact</a></li>
+  </ul>
+  <div style="margin-left:auto;display:flex;align-items:center;"><a href="#" style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.78rem;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;background:#111;color:#f0ede6;padding:0.6rem 1.4rem;border:1.5px solid #111;">Free Scoping Call</a></div>
+</nav>
+
+<div class="marquee-wrap">
+  <div class="marquee-inner">
+    <span class="accent">◆</span><span>Process Discovery</span>
+    <span class="accent">◆</span><span>AI Opportunity Mapping</span>
+    <span class="accent">◆</span><span>AI Evaluation</span>
+    <span class="accent">◆</span><span>Business Cases</span>
+    <span class="accent">◆</span><span>Implementation Support</span>
+    <span class="accent">◆</span><span>SME-Focused</span>
+    <span class="accent">◆</span><span>Fixed-Price Engagements</span>
+    <span class="accent">◆</span><span>Real ROI</span>
+    <span class="accent">◆</span><span>Process Discovery</span>
+    <span class="accent">◆</span><span>AI Opportunity Mapping</span>
+    <span class="accent">◆</span><span>AI Evaluation</span>
+    <span class="accent">◆</span><span>Business Cases</span>
+    <span class="accent">◆</span><span>Implementation Support</span>
+    <span class="accent">◆</span><span>SME-Focused</span>
+    <span class="accent">◆</span><span>Fixed-Price Engagements</span>
+    <span class="accent">◆</span><span>Real ROI</span>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="hero-eyebrow">Helping small to medium sized businesses unlock efficiencies using artificial intelligence</div>
+  <h1>Three tiers.<br><em>Zero guesswork.</em></h1>
+  <p class="hero-sub">From understanding where you are, to finding what's possible, to making it real — a structured path designed specifically for SMEs.</p>
+</section>
+
+<div class="process-strip">
+  <div class="process-step">
+    <span class="step-num">01</span>
+    <span class="step-name">Discover</span>
+  </div>
+  <div class="process-step">
+    <span class="step-num">02</span>
+    <span class="step-name">Evaluate</span>
+  </div>
+  <div class="process-step">
+    <span class="step-num">03</span>
+    <span class="step-name">Implement</span>
+  </div>
+</div>
+
+<section class="tiers-section">
+  <div class="section-label">// Our service tiers</div>
+  <div class="tiers-grid">
+
+    <div class="tier" id="tier1">
+      <div class="tier-badge">Fixed Price</div>
+      <div class="tier-num">01</div>
+      <div class="tier-name">Discover</div>
+      <div class="tier-tagline">We get under the hood of your business — mapping your processes, identifying where time and money are lost, and spotlighting where AI can make the biggest difference.</div>
+      <div class="price-block">
+        <div class="price-label">Starting from</div>
+        <div class="price">£2,500 <sub>fixed</sub></div>
+        <div class="price-note">* Scope-dependent. Quoted upfront. No surprises.</div>
+      </div>
+      <ul class="tier-deliverables">
+        <li>Current-state process mapping across key business functions</li>
+        <li>Efficiency audit — identifying high and low performance areas</li>
+        <li>AI opportunity heatmap with prioritised recommendations</li>
+        <li>Written discovery report with executive summary</li>
+        <li>30-minute readout session with your team</li>
+      </ul>
+      <div class="tier-duration">
+        <span>Typical duration</span>
+        <span class="duration-val">2–3 weeks</span>
+      </div>
+      <a href="#contact" class="cta-btn">Start with Discover</a>
+    </div>
+
+    <div class="tier tier-dark" id="tier2">
+      <div class="tier-badge acid">Fixed Price</div>
+      <div class="tier-num">02</div>
+      <div class="tier-name">Evaluate</div>
+      <div class="tier-tagline">We do the heavy lifting — researching AI tools, vendors, and approaches that fit your opportunities, then presenting a clear business case so you can make confident decisions.</div>
+      <div class="price-block">
+        <div class="price-label">Starting from</div>
+        <div class="price">£4,500 <sub>fixed</sub></div>
+        <div class="price-note">* Requires completion of Discover tier.</div>
+      </div>
+      <ul class="tier-deliverables">
+        <li>Market analysis of AI tools and vendors relevant to your opportunities</li>
+        <li>Shortlisted solution options with pros, cons & fit assessment</li>
+        <li>ROI modelling and cost-benefit analysis per opportunity</li>
+        <li>Vendor evaluation matrix and recommendation</li>
+        <li>Full business case document, board-ready</li>
+        <li>Presentation session with Q&A</li>
+      </ul>
+      <div class="tier-duration">
+        <span>Typical duration</span>
+        <span class="duration-val">3–4 weeks</span>
+      </div>
+      <a href="#contact" class="cta-btn light">Start Evaluating</a>
+    </div>
+
+    <div class="tier" id="tier3">
+      <div class="tier-badge orange">Time and Materials</div>
+      <div class="tier-num">03</div>
+      <div class="tier-name">Implement</div>
+      <div class="tier-tagline">When you're ready to move, we're in the trenches with you — supporting integration, change management, and adoption so AI actually lands in your business.</div>
+      <div class="price-block">
+        <div class="price-label">Day rate from</div>
+        <div class="price">£850 <sub>/day</sub></div>
+        <div class="price-note">* Estimated effort agreed before work begins.</div>
+      </div>
+      <ul class="tier-deliverables">
+        <li>Hands-on implementation support alongside your team or vendor</li>
+        <li>Integration oversight and quality assurance</li>
+        <li>Staff onboarding and change management support</li>
+        <li>Process documentation and SOPs for new AI workflows</li>
+        <li>Post-launch monitoring and optimisation (first 30 days)</li>
+      </ul>
+      <div class="tier-duration">
+        <span>Typical engagement</span>
+        <span class="duration-val">4–12 weeks</span>
+      </div>
+      <a href="#contact" class="cta-btn">Discuss Implementation</a>
+    </div>
+
+  </div>
+</section>
+
+<section class="how-section">
+  <div class="section-label">// How it works</div>
+  <div class="how-grid">
+    <div class="how-intro">Start where <em>you</em> are.<br>Go as far as <em>you need.</em></div>
+    <div class="how-detail">
+      <p>Each tier is designed to stand alone — you're never locked in to a full engagement. Run Discover and take the findings in-house. Commission Evaluate and hand the business case to your own team. Or go end-to-end with us: <strong>Discover → Evaluate → Implement.</strong></p>
+      <p>Fixed pricing on Tiers 1 and 2 means you know exactly what you're committing before we start. No scope creep, no hidden hours. Implementation is billed on a time & materials basis with a clear estimated effort agreed upfront — because real-world projects need flexibility.</p>
+      <p>All engagements begin with a free 45-minute scoping call so we can size the work fairly and make sure we're the right fit for your business.</p>
+    </div>
+  </div>
+</section>
+
+<section class="faq-section">
+  <div class="section-label">// Common questions</div>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q">Do I have to buy all three tiers? <span class="toggle">+</span></div>
+      <div class="faq-a">No. Each tier is available independently. That said, Tiers 2 and 3 are significantly more valuable when built on the outputs of the previous stage. We'll always advise the approach that makes most sense for your situation.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">How are fixed prices determined? <span class="toggle">+</span></div>
+      <div class="faq-a">We scope each engagement during a free initial call and provide a fixed price before any work begins. Pricing scales with the complexity and size of your business — the figures shown are starting points for typical SME engagements.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">We're not very technical — is that a problem? <span class="toggle">+</span></div>
+      <div class="faq-a">Not at all. Aifficiency is built specifically for SMEs who are not AI-native. We translate complex technology into plain business language and focus on practical outcomes, not technical jargon.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What industries do you work with? <span class="toggle">+</span></div>
+      <div class="faq-a">We work across industries — professional services, retail, logistics, hospitality, manufacturing, and more. If you have business processes, there are almost certainly AI opportunities worth exploring.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">How does the time and materials model work for Implementation? <span class="toggle">+</span></div>
+      <div class="faq-a">We agree an estimated day range and a day rate before the engagement begins. You'll receive weekly timesheets and can pause or extend as needed. We don't start the clock until scope is agreed.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">ai<em>ff</em>iciency</div>
+  <div class="footer-note">Helping SMEs unlock efficiencies using artificial intelligence</div>
+</footer>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top = my + 'px';
+  });
+  function animateRing() {
+    rx += (mx - rx) * 0.14;
+    ry += (my - ry) * 0.14;
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.tier').forEach(t => obs.observe(t));
+
+  document.querySelectorAll('.faq-item').forEach(item => {
+    item.querySelector('.faq-q').addEventListener('click', () => {
+      const open = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!open) item.classList.add('open');
+    });
+  });
+</script>
+</body>
+</html>
