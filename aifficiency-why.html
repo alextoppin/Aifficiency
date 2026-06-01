@@ -653,7 +653,7 @@
     .hero-name{font-size:3.5rem!important}
   }
 
-  /* ── NEW TWO-ROW HEADER/NAV ── */
+  
   .site-header {
     position: sticky;
     top: 0;
@@ -906,6 +906,42 @@
     .site-header{padding-top:env(safe-area-inset-top)}
   }
 
+
+  /* ── TWO-ROW HEADER + HYBRID NAV ── */
+  .site-header{position:sticky;top:0;z-index:200;background:var(--bg)}
+  .header-bar{padding:0 2rem;height:56px;display:flex;align-items:center;justify-content:space-between;border-bottom:1.5px solid var(--ink)}
+  .nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.35rem;letter-spacing:-0.03em;color:var(--ink);text-decoration:none;display:flex;align-items:center}
+  .nav-logo em{font-style:normal;background:var(--ink);color:var(--acid);padding:0.05em 0.2em}
+  .header-cta a{font-family:'Syne',sans-serif;font-weight:600;font-size:0.62rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none;background:var(--ink);color:var(--bg);padding:0.35rem 0.75rem;border:1px solid var(--ink);transition:background 0.15s;cursor:none;white-space:nowrap}
+  .header-cta a:hover{background:var(--orange);border-color:var(--orange);color:#fff}
+
+  /* NAV BAR */
+  .nav-bar{border-bottom:1.5px solid var(--ink);background:var(--bg)}
+  .nav-bar-inner{display:flex;align-items:stretch;height:42px}
+
+  /* Primary links — always visible */
+  .nav-primary{display:flex;align-items:stretch;flex:1}
+  .nav-primary a{font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:500;color:var(--ink-mid);text-decoration:none;display:flex;align-items:center;padding:0 1.4rem;border-right:1px solid var(--border);white-space:nowrap;transition:background 0.15s,color 0.15s}
+  .nav-primary a:hover{background:var(--card);color:var(--ink)}
+  .nav-primary a.active{font-weight:700;color:var(--ink);background:var(--card);border-bottom:2.5px solid var(--orange)}
+
+  /* Hamburger button */
+  .nav-hamburger{display:flex;align-items:center;justify-content:center;width:52px;border-left:1px solid var(--border);cursor:pointer;flex-shrink:0;background:none;border-top:none;border-right:none;border-bottom:none;transition:background 0.15s}
+  .nav-hamburger:hover{background:var(--card)}
+  .nav-hamburger svg{width:18px;height:18px;stroke:var(--ink);stroke-width:2;fill:none;stroke-linecap:round}
+
+  /* Dropdown menu */
+  .nav-dropdown{display:none;position:absolute;top:98px;right:0;background:var(--bg);border:1.5px solid var(--ink);border-top:none;min-width:220px;z-index:300;box-shadow:4px 4px 0 rgba(0,0,0,0.08)}
+  .nav-dropdown.open{display:block}
+  .nav-dropdown a{font-family:'DM Sans',sans-serif;font-size:0.875rem;font-weight:500;color:var(--ink);text-decoration:none;display:block;padding:0.9rem 1.25rem;border-bottom:1px solid var(--border);transition:background 0.15s}
+  .nav-dropdown a:last-child{border-bottom:none}
+  .nav-dropdown a:hover{background:var(--card)}
+  .nav-dropdown a.active{font-weight:700;border-left:3px solid var(--orange);padding-left:calc(1.25rem - 3px)}
+
+  /* Overlay */
+  .nav-overlay{display:none;position:fixed;inset:0;z-index:299}
+  .nav-overlay.open{display:block}
+
 </style>
 </head>
 <body>
@@ -914,20 +950,37 @@
     <a href="index.html" class="nav-logo">ai<em>ff</em>iciency</a>
     <div class="header-cta"><a href="aifficiency-contact.html">Free Scoping Call</a></div>
   </div>
-  <nav class="nav-bar">
+  <div class="nav-bar">
     <div class="nav-bar-inner">
-    <a href="index.html">Home</a>
+      <div class="nav-primary">
+      <a href="index.html">Home</a>
+      <a href="aifficiency-pricing.html">Services & Pricing</a>
+      <a href="aifficiency-contact.html">Contact</a>
+      </div>
+      <button class="nav-hamburger" onclick="toggleDropdown()" aria-label="More pages">
+        <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="nav-overlay" id="navOverlay" onclick="closeDropdown()"></div>
+  <div class="nav-dropdown" id="navDropdown">
     <a href="aifficiency-why.html" class="active">Why AI</a>
-    <a href="aifficiency-pricing.html">Services & Pricing</a>
     <a href="aifficiency-about.html">About</a>
     <a href="aifficiency-insights.html">Insights</a>
     <a href="aifficiency-faq.html">FAQ</a>
     <a href="aifficiency-aiready.html">Is AI Right For Me?</a>
-    <a href="aifficiency-contact.html">Contact</a>
-    </div>
-  </nav>
+  </div>
 </div>
-
+<script>
+  function toggleDropdown(){
+    document.getElementById('navDropdown').classList.toggle('open');
+    document.getElementById('navOverlay').classList.toggle('open');
+  }
+  function closeDropdown(){
+    document.getElementById('navDropdown').classList.remove('open');
+    document.getElementById('navOverlay').classList.remove('open');
+  }
+</script>
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
