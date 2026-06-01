@@ -486,6 +486,172 @@
     .cta-banner { flex-direction: column; align-items: flex-start; }
     footer { flex-direction: column; gap: 1rem; text-align: center; }
   }
+
+  /* ── MOBILE OVERRIDES ── */
+  @media(max-width:768px){
+    /* Nav */
+    nav{padding:0 1.25rem;height:56px}
+    .nav-links,.nav-cta{display:none!important}
+    .nav-burger{display:flex!important}
+    .nav-logo{font-size:1.1rem;margin-right:0}
+
+    /* Mobile menu */
+    .mobile-menu a{padding:0.9rem 1.25rem;font-size:0.95rem}
+
+    /* Typography scale down */
+    h1,.hero-name,.hero-h1{font-size:clamp(2.2rem,10vw,3.5rem)!important;letter-spacing:-0.03em!important}
+    .hero-sub,.hero-intro{font-size:0.9rem!important}
+
+    /* All two-column grids → single column */
+    .hero,.hero-section,
+    .background-section,.bg-left,.bg-right,
+    .how-grid,.cost-section,
+    .sme-grid,.not-right-grid,
+    .why-section,.why-left,.why-right,
+    .network-strip,.network-section,
+    .personal-section,
+    .what-section,
+    .signals-section,.signals-col,
+    .faq-body,
+    .main,.form-col,.info-col{
+      grid-template-columns:1fr!important;
+      display:block!important
+    }
+
+    /* Hero sections */
+    .hero{display:flex!important;flex-direction:column}
+    .hero-left,.hero-right{
+      padding:2.5rem 1.25rem!important;
+      border-right:none!important;
+      border-bottom:1.5px solid var(--ink)
+    }
+    .hero-right{border-bottom:none!important}
+
+    /* General padding */
+    section,
+    .hero,.tiers-section,.how-section,.why-section,
+    .faq-section,.start-section,.proof-section,
+    .reasons-section,.cost-section,.sme-section,
+    .not-right,.personal-section,.network-strip,
+    .background-section,.what-section,.articles-section,
+    .cases-section,.cta-section,.cta-banner,
+    .cta-strip,.form-col,.info-col,
+    .how-header,.pull-quote{
+      padding-left:1.25rem!important;
+      padding-right:1.25rem!important;
+      padding-top:2.5rem!important;
+      padding-bottom:2.5rem!important
+    }
+
+    /* Three-column grids → single column */
+    .tiers-grid,.tiers-row,
+    .reasons-grid,.start-steps,
+    .how-steps,.articles-grid,
+    .cases-grid,.proof-grid,
+    .expertise-grid,.quiz-grid{
+      grid-template-columns:1fr!important
+    }
+
+    /* Fix borders on stacked cards */
+    .tier,.tier-card,.reason,.start-step,
+    .how-step,.article-card,.case-card,
+    .proof-card,.expertise-item,.quiz-item,
+    .interest-card,.signals-col,.process-step{
+      border-right:none!important;
+      border-bottom:1.5px solid var(--ink)!important
+    }
+    .tier:last-child,.tier-card:last-child,
+    .reason:last-child,.start-step:last-child,
+    .how-step:last-child,.article-card:last-child,
+    .case-card:last-child,.proof-card:last-child,
+    .expertise-item:last-child,.interest-card:last-child,
+    .signals-col:last-child,.process-step:last-child{
+      border-bottom:none!important
+    }
+
+    /* Personal section */
+    .personal-section{display:flex!important;flex-direction:column}
+    .personal-intro{border-right:none!important;border-bottom:1.5px solid var(--ink)!important;padding:2.5rem 1.25rem!important}
+    .interest-card{padding:2rem 1.25rem!important}
+
+    /* Network strip */
+    .network-strip,.sme-section,.not-right,.why-left,.why-right{
+      padding:2.5rem 1.25rem!important
+    }
+    .network-tags{flex-wrap:wrap}
+
+    /* FAQ sidebar hidden on mobile */
+    .faq-nav{display:none!important}
+    .faq-content{padding:2rem 1.25rem!important}
+    .faq-body{display:block!important}
+
+    /* CTA banners */
+    .cta-section,.cta-banner,.cta-strip{
+      flex-direction:column!important;
+      align-items:flex-start!important;
+      gap:1.5rem!important
+    }
+    .cta-btn-main,.cta-btn,.cta-banner-btn{
+      width:100%;
+      text-align:center;
+      display:block!important
+    }
+
+    /* What section */
+    .what-section{display:block!important}
+    .what-label-col{margin-bottom:1.5rem}
+
+    /* Hero stats */
+    .hero-stat-row,.credential-row,.expect-row{
+      flex-wrap:wrap;
+      gap:1.25rem
+    }
+    .hero-stat-block{padding:1.75rem 1.25rem!important}
+
+    /* Form */
+    .form-row{grid-template-columns:1fr!important}
+    .form-col{border-right:none!important;border-bottom:1.5px solid var(--ink)!important;padding:2.5rem 1.25rem!important}
+    .info-col{padding:2.5rem 1.25rem!important}
+
+    /* Interests row */
+    .interests-row{flex-direction:column!important}
+
+    /* How header */
+    .how-header{flex-direction:column!important;padding:2.5rem 1.25rem!important}
+    .how-sub{text-align:left!important;max-width:100%!important}
+
+    /* Proof grid */
+    .proof-grid{grid-template-columns:1fr!important}
+
+    /* Footer */
+    footer{flex-direction:column!important;gap:1rem!important;text-align:center!important;padding:1.5rem 1.25rem!important}
+    .footer-links{display:none!important}
+
+    /* Process strip */
+    .process-strip{flex-direction:column!important}
+
+    /* Featured section */
+    .featured{grid-template-columns:1fr!important;display:block!important}
+    .featured-main{border-right:none!important;border-bottom:1.5px solid var(--ink)!important;padding:2rem 1.25rem!important}
+    .featured-side-card{padding:1.5rem 1.25rem!important}
+
+    /* Marquee smaller */
+    .marquee-inner span{font-size:0.58rem}
+
+    /* Pull quote */
+    .pull-quote{padding:2.5rem 1.25rem!important}
+
+    /* Bg sections */
+    .bg-left{border-right:none!important;border-bottom:1.5px solid var(--ink)!important;padding:2.5rem 1.25rem!important}
+    .bg-right{padding:2.5rem 1.25rem!important}
+
+    /* Cost section */
+    .cost-left{border-right:none!important;border-bottom:1.5px solid var(--ink)!important;padding-right:0!important;padding-bottom:2rem!important}
+    .cost-right{padding-left:0!important;padding-top:2rem!important}
+
+    /* Hero name page */
+    .hero-name{font-size:3.5rem!important}
+  }
 </style>
 </head>
 <body>
@@ -504,6 +670,21 @@
     <li style="display:flex;align-items:stretch;"><a href="#" style="font-size:0.85rem;font-weight:500;color:#444;text-decoration:none;display:flex;align-items:center;padding:0 1.25rem;">Contact</a></li>
   </ul>
   <div style="margin-left:auto;display:flex;align-items:center;"><a href="#" style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.78rem;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;background:#111;color:#f0ede6;padding:0.6rem 1.4rem;border:1.5px solid #111;">Free Scoping Call</a></div>
+
+  <!-- Mobile burger -->
+  <div class="nav-burger" id="burger" style="display:none;flex-direction:column;gap:5px;cursor:pointer;margin-left:auto;justify-content:center;padding:0.5rem;" onclick="toggleMenu()">
+    <span style="display:block;width:22px;height:2px;background:var(--ink);transition:transform 0.25s,opacity 0.2s"></span>
+    <span style="display:block;width:22px;height:2px;background:var(--ink);transition:transform 0.25s,opacity 0.2s"></span>
+    <span style="display:block;width:22px;height:2px;background:var(--ink);transition:transform 0.25s,opacity 0.2s"></span>
+  </div>
+  <div id="mobileMenu" style="display:none;position:fixed;top:56px;left:0;right:0;background:var(--bg);border-bottom:1.5px solid var(--ink);z-index:199;">
+    <a href="index.html" style="display:block;padding:0.9rem 1.25rem;font-size:0.9rem;font-weight:500;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--border);">Home</a>
+    <a href="aifficiency-why.html" style="display:block;padding:0.9rem 1.25rem;font-size:0.9rem;font-weight:500;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--border);">Why AI</a>
+    <a href="aifficiency-pricing.html" style="display:block;padding:0.9rem 1.25rem;font-size:0.9rem;font-weight:500;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--border);">Services & Pricing</a>
+    <a href="aifficiency-about.html" style="display:block;padding:0.9rem 1.25rem;font-size:0.9rem;font-weight:500;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--border);">About</a>
+    <a href="aifficiency-insights.html" style="display:block;padding:0.9rem 1.25rem;font-size:0.9rem;font-weight:500;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--border);">Insights</a>
+    <a href="aifficiency-contact.html" style="display:block;padding:0.9rem 1.25rem;font-size:0.9rem;font-weight:700;color:var(--orange);text-decoration:none;">Free Scoping Call →</a>
+  </div>
 </nav>
 
 <div class="marquee-wrap">
@@ -720,6 +901,21 @@
     });
   }, { threshold: 0.1 });
   document.querySelectorAll('.reason').forEach(r => obs.observe(r));
+
+  function toggleMenu(){
+    const m=document.getElementById('mobileMenu');
+    const b=document.getElementById('burger');
+    const open=m.style.display==='block';
+    m.style.display=open?'none':'block';
+    b.style.opacity=open?'1':'0.7';
+  }
+  // Show burger on mobile
+  function checkBurger(){
+    const b=document.getElementById('burger');
+    if(b) b.style.display=window.innerWidth<=768?'flex':'none';
+  }
+  window.addEventListener('resize',checkBurger);
+  checkBurger();
 </script>
 </body>
 </html>
