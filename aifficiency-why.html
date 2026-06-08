@@ -2,271 +2,436 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Aifficiency — Why AI & Automation</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@300;400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:#f0ede6;color:#111;font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img,svg,video{max-width:100%;height:auto;display:block}
+
+/* ── TOKENS ── */
+:root{
+  --bg:#f0ede6;--ink:#111;--mid:#555;--card:#e4e1da;
+  --dark:#111;--acid:#c8ff00;--orange:#ff4800;--border:#c8c5be;
+  --p:clamp(1rem,4vw,2.5rem);
+}
+
+/* ── TYPE ── */
+.mono{font-family:'DM Mono',monospace}
+.syne{font-family:'Syne',sans-serif}
+.eyebrow{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--orange);margin-bottom:1rem}
+.label{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--mid);margin-bottom:1.25rem}
+h1{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2.2rem,7vw,5rem);letter-spacing:-.04em;line-height:.97;color:#111}
+h1 em{font-style:normal;background:#111;color:var(--acid);padding:0 .1em}
+h2{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.5rem,4vw,2.6rem);letter-spacing:-.03em;line-height:1.1;color:#111}
+h2 em{font-style:normal;color:var(--orange)}
+h2.acid em{color:var(--acid)}
+h3{font-family:'Syne',sans-serif;font-weight:700;font-size:clamp(1rem,2.5vw,1.2rem);letter-spacing:-.02em;color:#111}
+p{color:var(--mid);line-height:1.75;font-size:clamp(.875rem,2vw,1rem)}
+p+p{margin-top:.875rem}
+strong{color:#111;font-weight:600}
+a{text-decoration:none;color:inherit}
+
+/* ── BUTTONS ── */
+.btn{display:inline-block;font-family:'Syne',sans-serif;font-weight:700;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;padding:.8rem 1.5rem;border:1.5px solid #111;transition:background .15s,color .15s,border-color .15s;text-align:center;cursor:pointer}
+.btn-dark{background:#111;color:var(--bg)}
+.btn-dark:hover{background:var(--orange);border-color:var(--orange);color:#fff}
+.btn-ghost{background:transparent;color:#111}
+.btn-ghost:hover{background:var(--card)}
+.btn-acid{background:var(--acid);color:#111;border-color:var(--acid)}
+.btn-acid:hover{background:#b0e000;border-color:#b0e000}
+.btn-block{display:block;width:100%}
+
+/* ── LAYOUT ── */
+.container{padding:clamp(2.5rem,5vw,5rem) var(--p)}
+.container-sm{padding:clamp(1.5rem,3vw,3rem) var(--p)}
+.border-b{border-bottom:1.5px solid #111}
+.border-t{border-top:1.5px solid #111}
+
+/* Two col grid */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:0}
+/* Three col grid */
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
+
+/* Bordered grid cells */
+.cell{border-right:1.5px solid #111;border-bottom:1.5px solid #111;padding:clamp(1.25rem,3vw,2rem)}
+.cell:last-child,.cell.no-right{border-right:none}
+.cell.no-bottom{border-bottom:none}
+.cell-dark{background:#111;color:var(--bg)}
+.cell-dark h2,.cell-dark h3,.cell-dark p,.cell-dark strong{color:var(--bg)}
+.cell-dark p{color:#bbb}
+.cell-dark strong{color:var(--bg)}
+.cell-dark .label{color:#888}
+.cell-dark .eyebrow{color:var(--acid)}
+
+/* ── NAV ── */
+.site-header{position:sticky;top:0;z-index:200;background:var(--bg)}
+.header-bar{height:52px;padding:0 var(--p);display:flex;align-items:center;justify-content:space-between;border-bottom:1.5px solid #111}
+.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(.95rem,3vw,1.3rem);letter-spacing:-.03em;color:#111;flex-shrink:0}
+.nav-logo em{font-style:normal;background:#111;color:var(--acid);padding:.05em .18em}
+.nav-cta-btn{font-family:'Syne',sans-serif;font-weight:600;font-size:.6rem;letter-spacing:.06em;text-transform:uppercase;background:#111;color:var(--bg);padding:.3rem .7rem;border:1px solid #111;white-space:nowrap;transition:background .15s}
+.nav-cta-btn:hover{background:var(--orange);border-color:var(--orange)}
+.nav-bar{border-bottom:1.5px solid #111;position:relative;background:var(--bg)}
+.nav-bar-inner{display:flex;align-items:stretch;height:40px}
+.nav-primary{display:flex;flex:1;min-width:0}
+.nav-primary a{font-family:'DM Sans',sans-serif;font-size:clamp(.7rem,2vw,.82rem);font-weight:500;color:var(--mid);display:flex;align-items:center;justify-content:center;flex:1;padding:0 .5rem;border-right:1px solid var(--border);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:background .15s,color .15s}
+.nav-primary a:last-child{border-right:none}
+.nav-primary a:hover{background:var(--card);color:#111}
+.nav-primary a.active{font-weight:700;color:#111;background:var(--card);box-shadow:inset 0 -2.5px 0 var(--orange)}
+.nav-hamburger{width:44px;flex-shrink:0;border:none;border-left:1px solid var(--border);background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .15s;color:#111;padding:0}
+.nav-hamburger:hover{background:var(--card)}
+.nav-hamburger svg{width:15px;height:15px;stroke:#111;stroke-width:2;fill:none;stroke-linecap:round}
+.nav-dropdown{display:none;position:absolute;top:100%;right:0;background:var(--bg);border:1.5px solid #111;border-top:none;min-width:190px;z-index:300;box-shadow:3px 3px 0 rgba(0,0,0,.07)}
+.nav-dropdown.open{display:block}
+.nav-dropdown a{font-size:.85rem;font-weight:500;color:#111;display:block;padding:.8rem 1.1rem;border-bottom:1px solid var(--border);transition:background .15s}
+.nav-dropdown a:last-child{border-bottom:none}
+.nav-dropdown a:hover{background:var(--card)}
+.nav-dropdown a.active{font-weight:700;border-left:3px solid var(--orange);padding-left:calc(1.1rem - 3px)}
+.nav-overlay{display:none;position:fixed;inset:0;z-index:199}
+.nav-overlay.open{display:block}
+
+/* ── MARQUEE ── */
+.marquee-wrap{background:#111;border-bottom:1.5px solid #111;padding:.6rem 0;overflow:hidden}
+.marquee-inner{display:flex;gap:2rem;white-space:nowrap;animation:marquee 25s linear infinite;width:max-content}
+.marquee-inner span{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:#555}
+.marquee-inner span.accent{color:var(--acid)}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ── HERO ── */
+.hero{display:grid;grid-template-columns:1fr 1fr;border-bottom:1.5px solid #111;min-height:calc(100svh - 92px)}
+.hero-left{padding:clamp(2rem,5vw,5rem) var(--p);border-right:1.5px solid #111;display:flex;flex-direction:column;justify-content:space-between;gap:2rem}
+.hero-right{display:flex;flex-direction:column}
+.hero-stat-block{flex:1;padding:clamp(1.5rem,3vw,2.5rem) var(--p);border-bottom:1.5px solid #111;display:flex;flex-direction:column;justify-content:center}
+.hero-stat-block:last-child{border-bottom:none}
+.stat-tag{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--orange);margin-bottom:.4rem}
+.stat-num{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2rem,5vw,3.8rem);letter-spacing:-.05em;line-height:1;color:#111;margin-bottom:.4rem}
+.stat-num em{font-style:normal;color:var(--orange)}
+.stat-desc{font-size:clamp(.78rem,1.5vw,.875rem);color:var(--mid);line-height:1.55}
+.hero-tagline{font-size:clamp(.875rem,2vw,1rem);color:var(--mid);line-height:1.65;padding-top:1.5rem;border-top:1.5px solid var(--border);margin-bottom:1.5rem}
+.hero-actions{display:flex;gap:.75rem;flex-wrap:wrap}
+
+/* ── CTA BANNER ── */
+.cta-banner{background:var(--acid);padding:clamp(2rem,5vw,4rem) var(--p);display:flex;align-items:center;justify-content:space-between;gap:1.5rem;border-bottom:1.5px solid #111}
+.cta-banner h2{color:#111;max-width:500px}
+.cta-banner h2 em{color:#111;background:none}
+
+/* ── FOOTER ── */
+footer{padding:clamp(1.25rem,3vw,2rem) var(--p);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;border-top:1.5px solid #111}
+.footer-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:#111}
+.footer-logo em{font-style:normal;background:#111;color:var(--acid);padding:0 .12em}
+.footer-links{display:flex;gap:1.5rem;list-style:none;flex-wrap:wrap}
+.footer-links a{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mid)}
+.footer-links a:hover{color:#111}
+.footer-note{font-family:'DM Mono',monospace;font-size:.55rem;color:var(--mid)}
+
+/* ── PROCESS STRIP ── */
+.process-strip{display:flex;border-bottom:1.5px solid #111;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.process-step{flex:1;min-width:120px;padding:1rem var(--p);border-right:1.5px solid #111;display:flex;align-items:center;gap:.75rem}
+.process-step:last-child{border-right:none}
+.step-num{font-family:'DM Mono',monospace;font-size:.6rem;color:var(--orange);flex-shrink:0}
+.step-name{font-family:'Syne',sans-serif;font-weight:700;font-size:.78rem;letter-spacing:.05em;text-transform:uppercase}
+
+/* ── FAQ ── */
+.faq-item{border-bottom:1px solid var(--border)}
+.faq-q{font-size:.92rem;font-weight:600;color:#111;padding:1.1rem 0;display:flex;justify-content:space-between;align-items:center;gap:1rem;cursor:pointer}
+.faq-toggle{color:var(--orange);font-size:1.2rem;flex-shrink:0;transition:transform .2s;line-height:1}
+.faq-a{font-size:.875rem;color:var(--mid);line-height:1.8;max-height:0;overflow:hidden;transition:max-height .35s ease,padding .2s}
+.faq-item.open .faq-a{max-height:300px;padding-bottom:1.25rem}
+.faq-item.open .faq-toggle{transform:rotate(45deg)}
+
+/* ── FORM ── */
+.form-group{margin-bottom:1.25rem}
+.form-label{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--mid);display:block;margin-bottom:.4rem}
+.form-input{width:100%;padding:.8rem .9rem;border:1.5px solid var(--border);background:var(--bg);font-family:'DM Sans',sans-serif;font-size:.9rem;color:#111;outline:none;border-radius:0;-webkit-appearance:none;transition:border-color .15s}
+.form-input:focus{border-color:#111}
+.form-input::placeholder{color:var(--border)}
+textarea.form-input{resize:vertical;min-height:110px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.form-submit{font-family:'Syne',sans-serif;font-weight:700;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;background:#111;color:var(--bg);padding:.9rem 1.5rem;border:1.5px solid #111;width:100%;cursor:pointer;margin-top:.5rem;transition:background .15s}
+.form-submit:hover{background:var(--orange);border-color:var(--orange)}
+.form-note{font-family:'DM Mono',monospace;font-size:.58rem;color:var(--mid);margin-top:.75rem;line-height:1.6;text-align:center}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.fade-in{opacity:0;transform:translateY(16px)}
+.fade-in.visible{animation:fadeUp .5s forwards}
+
+/* ── TABLET 768px ── */
+@media(max-width:768px){
+  .hero{grid-template-columns:1fr;min-height:auto}
+  .hero-left{border-right:none;border-bottom:1.5px solid #111}
+  .hero-right{display:none}
+  .grid-2{grid-template-columns:1fr}
+  .grid-3{grid-template-columns:1fr}
+  .cell{border-right:none}
+  .cell.no-right-mobile{border-right:none}
+  .left-col{border-right:none;border-bottom:1.5px solid #111}
+  .form-row{grid-template-columns:1fr}
+  .cta-banner{flex-direction:column;align-items:flex-start}
+  .cta-banner .btn{width:100%;display:block}
+  footer{justify-content:center;text-align:center}
+  .footer-links{justify-content:center}
+}
+
+/* ── MOBILE 480px ── */
+@media(max-width:480px){
+  :root{--p:1rem}
+  h1{font-size:clamp(2rem,9vw,2.8rem)}
+  .hero-actions{flex-direction:column}
+  .hero-actions .btn{width:100%;display:block}
+  .btn-primary,.btn-secondary{display:block;width:100%;text-align:center}
+  footer .footer-links{display:none}
+  .footer-note{text-align:center;width:100%}
+  body{padding-bottom:env(safe-area-inset-bottom,0px)}
+  .site-header{padding-top:env(safe-area-inset-top,0px)}
+}
+
+
+.why-hero{display:grid;grid-template-columns:1fr 1fr;border-bottom:1.5px solid #111}
+.why-hero-left{padding:clamp(2.5rem,5vw,5rem) var(--p);border-right:1.5px solid #111}
+.why-hero-right{padding:clamp(2.5rem,5vw,5rem) var(--p);display:flex;flex-direction:column;justify-content:flex-end}
+.stat-row{display:flex;gap:2rem;flex-wrap:wrap;padding-top:2rem;border-top:1.5px solid var(--border)}
+.stat-item{}
+.stat-big{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.8rem,4vw,2.8rem);letter-spacing:-.04em;color:#111;line-height:1}
+.stat-big em{font-style:normal;color:var(--orange)}
+.stat-small{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);margin-top:.3rem;line-height:1.4}
+.pull-quote{background:#111;color:var(--bg);padding:clamp(2rem,4vw,4rem) var(--p);border-bottom:1.5px solid #111}
+.pull-quote blockquote{font-family:'Syne',sans-serif;font-weight:700;font-size:clamp(1.3rem,3.5vw,2.5rem);letter-spacing:-.03em;line-height:1.15;max-width:800px}
+.pull-quote blockquote em{font-style:normal;color:var(--acid)}
+.reasons-grid{display:grid;grid-template-columns:repeat(3,1fr);border:1.5px solid #111}
+.reason{padding:clamp(1.5rem,3vw,2rem);border-right:1.5px solid #111;border-bottom:1.5px solid #111}
+.reason:nth-child(3n){border-right:none}
+.reason:nth-last-child(-n+3){border-bottom:none}
+.reason-icon{font-size:1.4rem;display:block;margin-bottom:.75rem}
+.reason-title{font-family:'Syne',sans-serif;font-weight:700;font-size:clamp(.9rem,2vw,1rem);margin-bottom:.5rem}
+.reason-body{font-size:clamp(.78rem,1.5vw,.875rem);color:var(--mid);line-height:1.6}
+.reason-stat{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--orange);margin-top:.75rem}
+.cost-grid{display:grid;grid-template-columns:1fr 1fr;border-bottom:1.5px solid #111}
+.cost-left{padding:clamp(2rem,4vw,4rem) var(--p);border-right:1.5px solid #111}
+.cost-right{padding:clamp(2rem,4vw,4rem) var(--p)}
+.cost-list{list-style:none;margin-top:1.25rem}
+.cost-list li{font-size:.875rem;color:#111;padding:.85rem 0;border-bottom:1px solid var(--border);display:flex;gap:.75rem;align-items:flex-start;line-height:1.45}
+.cost-list li:first-child{border-top:1px solid var(--border)}
+.cost-list li::before{content:'✕';color:var(--orange);font-size:.7rem;flex-shrink:0;font-weight:700;margin-top:.1rem}
+.myth-list{list-style:none}
+.myth-item{padding:1rem 0;border-bottom:1px solid #2e2e2e}
+.myth-item:first-child{border-top:1px solid #2e2e2e}
+.myth-label{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:var(--orange);margin-bottom:.25rem}
+.myth-label.truth{color:var(--acid)}
+.myth-text{font-size:.875rem;color:#bbb;line-height:1.5}
+.myth-text.truth-text{color:var(--bg)}
+.start-grid{display:grid;grid-template-columns:repeat(3,1fr);border:1.5px solid #111;margin-top:1.5rem}
+.start-step{padding:clamp(1.5rem,3vw,2rem);border-right:1.5px solid #111}
+.start-step:last-child{border-right:none}
+.start-n{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2rem,4vw,3rem);letter-spacing:-.05em;color:var(--border);margin-bottom:.75rem}
+@media(max-width:768px){
+  .why-hero{grid-template-columns:1fr}
+  .why-hero-left{border-right:none;border-bottom:1.5px solid #111}
+  .reasons-grid{grid-template-columns:1fr}
+  .reason{border-right:none;border-bottom:1.5px solid #111 !important}
+  .reason:last-child{border-bottom:none !important}
+  .cost-grid{grid-template-columns:1fr}
+  .cost-left{border-right:none;border-bottom:1.5px solid #111}
+  .start-grid{grid-template-columns:1fr}
+  .start-step{border-right:none;border-bottom:1.5px solid #111}
+  .start-step:last-child{border-bottom:none}
+}
+
+</style>
 </head>
 <body>
-<div class="cursor" id="c"></div>
-<div class="cursor-ring" id="cr"></div>
-
-<div class="site-header">
+<header class="site-header">
   <div class="header-bar">
     <a href="index.html" class="nav-logo">ai<em>ff</em>iciency</a>
-    <div class="header-cta"><a href="aifficiency-contact.html">Free Scoping Call</a></div>
+    <a href="aifficiency-contact.html" class="nav-cta-btn">Free Scoping Call</a>
   </div>
-  <div class="nav-bar">
+  <nav class="nav-bar">
     <div class="nav-bar-inner">
-      <div class="nav-primary">
-      <a href="index.html">Home</a>
-      <a href="aifficiency-pricing.html">Services & Pricing</a>
-      <a href="aifficiency-contact.html">Contact</a>
-      </div>
-      <button class="nav-hamburger" onclick="toggleDropdown()" aria-label="More pages">
+      <div class="nav-primary"><a href="index.html" class="">Home</a><a href="aifficiency-pricing.html" class="">Services & Pricing</a><a href="aifficiency-contact.html" class="">Contact</a></div>
+      <button class="nav-hamburger" id="navBtn" aria-label="More">
         <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
     </div>
-  </div>
-  <div class="nav-overlay" id="navOverlay" onclick="closeDropdown()"></div>
-  <div class="nav-dropdown" id="navDropdown">
-    <a href="aifficiency-why.html" class="active">Why AI</a>
-    <a href="aifficiency-about.html">About</a>
-    <a href="aifficiency-insights.html">Insights</a>
-    <a href="aifficiency-faq.html">FAQ</a>
-    <a href="aifficiency-aiready.html">Is AI Right For Me?</a>
-  </div>
-</div>
+    <div class="nav-dropdown" id="navDropdown"><a href="aifficiency-why.html" class="active">Why AI</a><a href="aifficiency-about.html" class="">About</a><a href="aifficiency-insights.html" class="">Insights</a><a href="aifficiency-faq.html" class="">FAQ</a><a href="aifficiency-aiready.html" class="">Is AI Right For Me?</a></div>
+  </nav>
+  <div class="nav-overlay" id="navOverlay"></div>
+</header>
 
-</div>
-  <div class="nav-bar">
-    <div class="nav-bar-inner">
-      <div class="nav-primary">
-      <a href="index.html">Home</a>
-      <a href="aifficiency-pricing.html">Services & Pricing</a>
-      <a href="aifficiency-contact.html">Contact</a>
+<section class="why-hero">
+  <div class="why-hero-left">
+    <p class="eyebrow">The case for AI & automation</p>
+    <h1 style="margin-bottom:1.5rem">This isn't<br>a trend.<br>It's a <em>shift.</em></h1>
+    <p>Artificial intelligence and automation are no longer reserved for tech giants. They are practical, accessible tools reshaping how businesses of every size operate — and the gap between those who adopt and those who don't is widening every month.</p>
+  </div>
+  <div class="why-hero-right">
+    <p class="label">// The numbers</p>
+    <div class="stat-row">
+      <div class="stat-item">
+        <div class="stat-big"><em>40%</em></div>
+        <div class="stat-small">of daily tasks are automatable today</div>
       </div>
-      <button class="nav-hamburger" onclick="toggleDropdown()" aria-label="More pages">
-        <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-      </button>
-    </div>
-  </div>
-  <div class="nav-overlay" id="navOverlay" onclick="closeDropdown()"></div>
-  <div class="nav-dropdown" id="navDropdown">
-    <a href="aifficiency-why.html" class="active">Why AI</a>
-    <a href="aifficiency-about.html">About</a>
-    <a href="aifficiency-insights.html">Insights</a>
-    <a href="aifficiency-faq.html">FAQ</a>
-    <a href="aifficiency-aiready.html">Is AI Right For Me?</a>
-  </div>
-</div>
-
-<div class="marquee-wrap">
-  <div class="marquee-inner">
-    <span class="accent">◆</span><span>The Future Is Already Here</span>
-    <span class="accent">◆</span><span>Your Competitors Are Moving</span>
-    <span class="accent">◆</span><span>Time Is Your Most Valuable Resource</span>
-    <span class="accent">◆</span><span>AI Is Not Just For Enterprise</span>
-    <span class="accent">◆</span><span>Small Teams, Bigger Output</span>
-    <span class="accent">◆</span><span>Stop Doing What Machines Can Do</span>
-    <span class="accent">◆</span><span>The Future Is Already Here</span>
-    <span class="accent">◆</span><span>Your Competitors Are Moving</span>
-    <span class="accent">◆</span><span>Time Is Your Most Valuable Resource</span>
-    <span class="accent">◆</span><span>AI Is Not Just For Enterprise</span>
-    <span class="accent">◆</span><span>Small Teams, Bigger Output</span>
-    <span class="accent">◆</span><span>Stop Doing What Machines Can Do</span>
-  </div>
-</div>
-
-<section class="hero">
-  <div class="hero-left">
-    <div class="hero-eyebrow">The case for AI & automation</div>
-    <h1>This isn't a trend.<br>It's a <em>shift.</em></h1>
-  </div>
-  <div class="hero-right">
-    <p class="hero-intro">Artificial intelligence and automation are no longer emerging technologies reserved for tech giants with unlimited budgets. They are practical, accessible tools that are reshaping how businesses of every size operate — and the gap between those who adopt and those who don't is widening every month.</p>
-    <div class="hero-stat-row">
-      <div class="hero-stat">
-        <div class="stat-num"><span>4×</span></div>
-        <div class="stat-label">Productivity gain reported by SMEs using AI-assisted workflows</div>
+      <div class="stat-item">
+        <div class="stat-big"><em>2×</em></div>
+        <div class="stat-small">SME AI adoption in 24 months</div>
       </div>
-      <div class="hero-stat">
-        <div class="stat-num"><span>72%</span></div>
-        <div class="stat-label">Of business leaders say AI is their top investment priority</div>
-      </div>
-      <div class="hero-stat">
-        <div class="stat-num"><span>£0</span></div>
-        <div class="stat-label">Cost to start understanding where AI fits in your business</div>
+      <div class="stat-item">
+        <div class="stat-big"><em>55%</em></div>
+        <div class="stat-small">of SME leaders say they're not using AI effectively</div>
       </div>
     </div>
   </div>
 </section>
 
 <div class="pull-quote">
-  <blockquote>
-    "AI won't replace your business. But a business <em>using AI</em> very likely will."
-  </blockquote>
-  <cite>— The new competitive reality for SMEs</cite>
+  <blockquote>"AI won't replace your business. But a business <em>using AI</em> very likely will."</blockquote>
 </div>
 
-<section class="reasons-section">
-  <div class="section-label">// Six reasons it matters now</div>
+<section class="container border-b">
+  <p class="label">// Six reasons it matters now</p>
   <div class="reasons-grid">
-
-    <div class="reason">
+    <div class="reason fade-in">
       <span class="reason-icon">⏱</span>
       <div class="reason-title">Time is your scarcest resource</div>
-      <div class="reason-body">In an SME, everyone wears multiple hats. Repetitive, manual tasks — data entry, scheduling, reporting, chasing invoices — consume hours that could be spent on growth, customers, and strategy. Automation gives that time back.</div>
+      <p class="reason-body">Repetitive manual tasks consume hours that could be spent on growth, customers, and strategy. Automation gives that time back.</p>
       <div class="reason-stat">Up to 40% of daily tasks are automatable</div>
     </div>
-
-    <div class="reason">
+    <div class="reason fade-in">
       <span class="reason-icon">📉</span>
       <div class="reason-title">Errors cost more than you think</div>
-      <div class="reason-body">Human error in manual processes isn't just embarrassing — it's expensive. Missed orders, incorrect invoices, data discrepancies. Automated processes are consistent, auditable, and don't have bad days.</div>
+      <p class="reason-body">Missed orders, incorrect invoices, data discrepancies. Automated processes are consistent, auditable, and don't have bad days.</p>
       <div class="reason-stat">Manual errors cost UK SMEs billions annually</div>
     </div>
-
-    <div class="reason">
+    <div class="reason fade-in">
       <span class="reason-icon">📈</span>
       <div class="reason-title">Scale without scaling headcount</div>
-      <div class="reason-body">Traditionally, growth meant hiring. With AI and automation, you can dramatically increase output and capacity without a proportional increase in staff costs — making your business model fundamentally more efficient.</div>
-      <div class="reason-stat">SMEs report 30% cost reduction on automated workflows</div>
+      <p class="reason-body">Dramatically increase output and capacity without a proportional increase in staff costs.</p>
+      <div class="reason-stat">30% cost reduction on automated workflows</div>
     </div>
-
-    <div class="reason">
+    <div class="reason fade-in">
       <span class="reason-icon">🎯</span>
       <div class="reason-title">Better decisions, faster</div>
-      <div class="reason-body">AI tools can surface patterns in your data that would take analysts weeks to find. From customer behaviour to stock trends to financial forecasting — smarter data means smarter decisions at every level of your business.</div>
-      <div class="reason-stat">Businesses using AI analytics outperform peers by 2.6×</div>
+      <p class="reason-body">AI tools surface patterns in your data that would take analysts weeks to find.</p>
+      <div class="reason-stat">AI analytics users outperform peers by 2.6×</div>
     </div>
-
-    <div class="reason">
+    <div class="reason fade-in">
       <span class="reason-icon">🤝</span>
       <div class="reason-title">Customer expectations have changed</div>
-      <div class="reason-body">Customers now expect fast responses, personalised experiences, and frictionless service. AI-powered tools — from chatbots to personalised email to smart CRM — let smaller businesses punch well above their weight.</div>
+      <p class="reason-body">Customers expect fast responses, personalised experiences, and frictionless service.</p>
       <div class="reason-stat">64% of customers expect real-time responses</div>
     </div>
-
-    <div class="reason">
+    <div class="reason fade-in">
       <span class="reason-icon">⚡</span>
       <div class="reason-title">Your competitors aren't waiting</div>
-      <div class="reason-body">Adoption of AI among SMEs has doubled in the last two years. The businesses moving now are building compounding advantages in efficiency, speed, and cost. Every month of delay is ground ceded to competitors who aren't standing still.</div>
+      <p class="reason-body">Adoption has doubled in two years. Every month of delay is ground ceded to competitors.</p>
       <div class="reason-stat">AI adoption among SMEs doubled in 24 months</div>
     </div>
-
   </div>
 </section>
 
-<section class="cost-section">
+<div class="cost-grid">
   <div class="cost-left">
-    <div class="section-label">// The cost of waiting</div>
-    <h2 class="cost-heading">Inaction has a <em>price tag.</em></h2>
-    <div class="cost-body">
-      <p>There's a common assumption that doing nothing is the safe option — that waiting until AI is "more mature" or "better understood" protects the business from risk. The opposite is true.</p>
-      <p>Every month spent on inefficient manual processes is a month of avoidable cost. Every quarter without data-driven insight is a quarter of missed opportunity. The businesses that move early build advantages that are genuinely hard to close.</p>
-    </div>
+    <p class="label">// The cost of waiting</p>
+    <h2 style="margin-bottom:1.25rem">Inaction has a <em>price tag.</em></h2>
+    <p style="margin-bottom:1rem">Every month spent on inefficient manual processes is a month of avoidable cost. Every quarter without data-driven insight is missed opportunity.</p>
+    <p>The businesses that move early build advantages that are genuinely hard to close.</p>
   </div>
   <div class="cost-right">
-    <div class="section-label">// What standing still looks like</div>
+    <p class="label">// What standing still looks like</p>
     <ul class="cost-list">
-      <li>Staff spending hours on tasks that could run automatically overnight</li>
-      <li>Decisions made on gut feel because data is too hard to interrogate quickly</li>
-      <li>Customer service bottlenecks that damage satisfaction and retention</li>
+      <li>Staff spending hours on tasks that could run automatically</li>
+      <li>Decisions made on gut feel because data is hard to interrogate</li>
       <li>Competitors with leaner operations undercutting on price or speed</li>
-      <li>Hiring to solve capacity problems that automation would fix for a fraction of the cost</li>
+      <li>Hiring to solve capacity problems that automation would fix cheaper</li>
       <li>Missing market signals because no one has time to analyse them</li>
-      <li>Onboarding new staff to manual processes that shouldn't exist</li>
     </ul>
   </div>
-</section>
+</div>
 
-<section class="sme-section">
-  <div class="section-label">// Built for businesses like yours</div>
-  <div class="sme-grid">
+<section class="container-sm" style="background:#111;color:var(--bg);border-bottom:1.5px solid #111">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,5rem)">
     <div>
-      <h2 class="sme-heading">AI isn't just for <em>big business.</em></h2>
-      <div class="sme-body">
-        <p>There's a persistent myth that artificial intelligence requires enterprise budgets, dedicated data science teams, and months of implementation. That was true five years ago. It isn't true today.</p>
-        <p>The tools available to SMEs in <strong>2025 are powerful, affordable, and increasingly simple to deploy</strong> — from off-the-shelf AI software that plugs into the tools you already use, to lightweight custom automations that can be built and running within weeks.</p>
-        <p>The real barrier isn't money or technology. It's knowing where to start, which problems are worth solving, and which solutions are actually right for your situation.</p>
-      </div>
+      <p class="label" style="color:#888">// Built for businesses like yours</p>
+      <h2 class="acid" style="margin-bottom:1.25rem">AI isn't just for <em>big business.</em></h2>
+      <p style="color:#bbb;margin-bottom:1rem">The tools available to SMEs in 2025 are powerful, affordable, and increasingly simple to deploy. The real barrier is knowing where to start — that's exactly what we're here for.</p>
     </div>
     <div>
-      <div class="section-label" style="color:#888;">// Myths vs reality</div>
+      <p class="label" style="color:#888">// Myths vs reality</p>
       <ul class="myth-list">
         <li class="myth-item">
           <div class="myth-label">Myth</div>
           <div class="myth-text">"AI is too expensive for a business our size."</div>
-          <div class="myth-label truth" style="margin-top:0.6rem;">Reality</div>
-          <div class="myth-text truth-text">Many AI tools cost less per month than a single software subscription. The ROI often arrives within the first quarter.</div>
+          <div class="myth-label truth" style="margin-top:.5rem">Reality</div>
+          <div class="myth-text truth-text">Many AI tools cost less than a single software subscription. ROI often arrives within the first quarter.</div>
         </li>
         <li class="myth-item">
           <div class="myth-label">Myth</div>
-          <div class="myth-text">"We'd need to hire technical people to make it work."</div>
-          <div class="myth-label truth" style="margin-top:0.6rem;">Reality</div>
-          <div class="myth-text truth-text">Most modern AI tools are designed for non-technical users. And where integration is needed, that's exactly what Aifficiency is for.</div>
-        </li>
-        <li class="myth-item">
-          <div class="myth-label">Myth</div>
-          <div class="myth-text">"Our processes are too specific for generic AI tools."</div>
-          <div class="myth-label truth" style="margin-top:0.6rem;">Reality</div>
-          <div class="myth-text truth-text">The best outcomes often come from applying well-established AI capabilities to specific business problems — not building from scratch.</div>
+          <div class="myth-text">"We'd need to hire technical people."</div>
+          <div class="myth-label truth" style="margin-top:.5rem">Reality</div>
+          <div class="myth-text truth-text">Most modern AI tools are designed for non-technical users. Where integration is needed, that's what Aifficiency is for.</div>
         </li>
       </ul>
     </div>
   </div>
 </section>
 
-<section class="start-section">
-  <div class="section-label">// Where to begin</div>
-  <div class="start-steps">
+<section class="container border-b">
+  <p class="label">// Where to begin</p>
+  <div class="start-grid">
     <div class="start-step">
-      <div class="start-step-num">01</div>
-      <div class="start-step-title">Understand your processes</div>
-      <div class="start-step-body">Before you can improve anything, you need a clear picture of how your business actually runs today — where time goes, where errors happen, and where bottlenecks form. This is where every successful AI journey starts.</div>
+      <div class="start-n">01</div>
+      <h3 style="margin-bottom:.5rem">Understand your processes</h3>
+      <p style="font-size:.875rem">Before you can improve anything, you need a clear picture of how your business actually runs today.</p>
     </div>
     <div class="start-step">
-      <div class="start-step-num">02</div>
-      <div class="start-step-title">Identify the right opportunities</div>
-      <div class="start-step-body">Not everything should be automated. The best opportunities are repetitive, rules-based tasks with high volume or high error rates. Finding them — and prioritising them — is a skill in itself.</div>
+      <div class="start-n">02</div>
+      <h3 style="margin-bottom:.5rem">Identify the right opportunities</h3>
+      <p style="font-size:.875rem">Not everything should be automated. Finding and prioritising the right opportunities is a skill in itself.</p>
     </div>
     <div class="start-step">
-      <div class="start-step-num">03</div>
-      <div class="start-step-title">Move with confidence</div>
-      <div class="start-step-body">Armed with a clear diagnosis and a well-researched business case, implementation becomes straightforward. You know what you're building, why you're building it, and what success looks like.</div>
+      <div class="start-n">03</div>
+      <h3 style="margin-bottom:.5rem">Move with confidence</h3>
+      <p style="font-size:.875rem">Armed with a clear diagnosis and a well-researched business case, implementation becomes straightforward.</p>
     </div>
   </div>
 </section>
 
 <div class="cta-banner">
-  <div class="cta-banner-text">Ready to find out where<br>AI can work for you?</div>
-  <a href="aifficiency-pricing.html" class="cta-banner-btn">See our services →</a>
+  <div>
+    <h2>Ready to find out where AI can work for you?</h2>
+  </div>
+  <a href="aifficiency-pricing.html" class="btn btn-dark">See our services →</a>
 </div>
+
 
 <footer>
   <div class="footer-logo">ai<em>ff</em>iciency</div>
-  <div class="footer-note">Helping SMEs unlock efficiencies using artificial intelligence</div>
+  <ul class="footer-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="aifficiency-why.html">Why AI</a></li>
+    <li><a href="aifficiency-pricing.html">Services</a></li>
+    <li><a href="aifficiency-about.html">About</a></li>
+    <li><a href="aifficiency-insights.html">Insights</a></li>
+    <li><a href="aifficiency-faq.html">FAQ</a></li>
+  </ul>
+  <div class="footer-note">© 2025 Aifficiency</div>
 </footer>
 
 
 <script>
-  function toggleDropdown(){
-    document.getElementById('navDropdown').classList.toggle('open');
-    document.getElementById('navOverlay').classList.toggle('open');
-  }
-  function closeDropdown(){
-    document.getElementById('navDropdown').classList.remove('open');
-    document.getElementById('navOverlay').classList.remove('open');
-  }
+const btn=document.getElementById('navBtn');
+const dd=document.getElementById('navDropdown');
+const ov=document.getElementById('navOverlay');
+if(btn){
+  btn.addEventListener('click',()=>{dd.classList.toggle('open');ov.classList.toggle('open')});
+  ov.addEventListener('click',()=>{dd.classList.remove('open');ov.classList.remove('open')});
+}
+// Scroll fade-ins
+const obs=new IntersectionObserver(els=>els.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:.1});
+document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
 </script>
-<script>
-  const cur=document.getElementById('c'),ring=document.getElementById('cr');
-  if(cur){
-    let mx=0,my=0,rx=0,ry=0;
-    document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
-    (function loop(){rx+=(mx-rx)*0.14;ry+=(my-ry)*0.14;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop)})();
-  }
-</script>
+
 </body>
 </html>

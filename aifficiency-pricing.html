@@ -2,248 +2,397 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Aifficiency — Services & Pricing</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@300;400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:#f0ede6;color:#111;font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img,svg,video{max-width:100%;height:auto;display:block}
+
+/* ── TOKENS ── */
+:root{
+  --bg:#f0ede6;--ink:#111;--mid:#555;--card:#e4e1da;
+  --dark:#111;--acid:#c8ff00;--orange:#ff4800;--border:#c8c5be;
+  --p:clamp(1rem,4vw,2.5rem);
+}
+
+/* ── TYPE ── */
+.mono{font-family:'DM Mono',monospace}
+.syne{font-family:'Syne',sans-serif}
+.eyebrow{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--orange);margin-bottom:1rem}
+.label{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--mid);margin-bottom:1.25rem}
+h1{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2.2rem,7vw,5rem);letter-spacing:-.04em;line-height:.97;color:#111}
+h1 em{font-style:normal;background:#111;color:var(--acid);padding:0 .1em}
+h2{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.5rem,4vw,2.6rem);letter-spacing:-.03em;line-height:1.1;color:#111}
+h2 em{font-style:normal;color:var(--orange)}
+h2.acid em{color:var(--acid)}
+h3{font-family:'Syne',sans-serif;font-weight:700;font-size:clamp(1rem,2.5vw,1.2rem);letter-spacing:-.02em;color:#111}
+p{color:var(--mid);line-height:1.75;font-size:clamp(.875rem,2vw,1rem)}
+p+p{margin-top:.875rem}
+strong{color:#111;font-weight:600}
+a{text-decoration:none;color:inherit}
+
+/* ── BUTTONS ── */
+.btn{display:inline-block;font-family:'Syne',sans-serif;font-weight:700;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;padding:.8rem 1.5rem;border:1.5px solid #111;transition:background .15s,color .15s,border-color .15s;text-align:center;cursor:pointer}
+.btn-dark{background:#111;color:var(--bg)}
+.btn-dark:hover{background:var(--orange);border-color:var(--orange);color:#fff}
+.btn-ghost{background:transparent;color:#111}
+.btn-ghost:hover{background:var(--card)}
+.btn-acid{background:var(--acid);color:#111;border-color:var(--acid)}
+.btn-acid:hover{background:#b0e000;border-color:#b0e000}
+.btn-block{display:block;width:100%}
+
+/* ── LAYOUT ── */
+.container{padding:clamp(2.5rem,5vw,5rem) var(--p)}
+.container-sm{padding:clamp(1.5rem,3vw,3rem) var(--p)}
+.border-b{border-bottom:1.5px solid #111}
+.border-t{border-top:1.5px solid #111}
+
+/* Two col grid */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:0}
+/* Three col grid */
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
+
+/* Bordered grid cells */
+.cell{border-right:1.5px solid #111;border-bottom:1.5px solid #111;padding:clamp(1.25rem,3vw,2rem)}
+.cell:last-child,.cell.no-right{border-right:none}
+.cell.no-bottom{border-bottom:none}
+.cell-dark{background:#111;color:var(--bg)}
+.cell-dark h2,.cell-dark h3,.cell-dark p,.cell-dark strong{color:var(--bg)}
+.cell-dark p{color:#bbb}
+.cell-dark strong{color:var(--bg)}
+.cell-dark .label{color:#888}
+.cell-dark .eyebrow{color:var(--acid)}
+
+/* ── NAV ── */
+.site-header{position:sticky;top:0;z-index:200;background:var(--bg)}
+.header-bar{height:52px;padding:0 var(--p);display:flex;align-items:center;justify-content:space-between;border-bottom:1.5px solid #111}
+.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(.95rem,3vw,1.3rem);letter-spacing:-.03em;color:#111;flex-shrink:0}
+.nav-logo em{font-style:normal;background:#111;color:var(--acid);padding:.05em .18em}
+.nav-cta-btn{font-family:'Syne',sans-serif;font-weight:600;font-size:.6rem;letter-spacing:.06em;text-transform:uppercase;background:#111;color:var(--bg);padding:.3rem .7rem;border:1px solid #111;white-space:nowrap;transition:background .15s}
+.nav-cta-btn:hover{background:var(--orange);border-color:var(--orange)}
+.nav-bar{border-bottom:1.5px solid #111;position:relative;background:var(--bg)}
+.nav-bar-inner{display:flex;align-items:stretch;height:40px}
+.nav-primary{display:flex;flex:1;min-width:0}
+.nav-primary a{font-family:'DM Sans',sans-serif;font-size:clamp(.7rem,2vw,.82rem);font-weight:500;color:var(--mid);display:flex;align-items:center;justify-content:center;flex:1;padding:0 .5rem;border-right:1px solid var(--border);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:background .15s,color .15s}
+.nav-primary a:last-child{border-right:none}
+.nav-primary a:hover{background:var(--card);color:#111}
+.nav-primary a.active{font-weight:700;color:#111;background:var(--card);box-shadow:inset 0 -2.5px 0 var(--orange)}
+.nav-hamburger{width:44px;flex-shrink:0;border:none;border-left:1px solid var(--border);background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .15s;color:#111;padding:0}
+.nav-hamburger:hover{background:var(--card)}
+.nav-hamburger svg{width:15px;height:15px;stroke:#111;stroke-width:2;fill:none;stroke-linecap:round}
+.nav-dropdown{display:none;position:absolute;top:100%;right:0;background:var(--bg);border:1.5px solid #111;border-top:none;min-width:190px;z-index:300;box-shadow:3px 3px 0 rgba(0,0,0,.07)}
+.nav-dropdown.open{display:block}
+.nav-dropdown a{font-size:.85rem;font-weight:500;color:#111;display:block;padding:.8rem 1.1rem;border-bottom:1px solid var(--border);transition:background .15s}
+.nav-dropdown a:last-child{border-bottom:none}
+.nav-dropdown a:hover{background:var(--card)}
+.nav-dropdown a.active{font-weight:700;border-left:3px solid var(--orange);padding-left:calc(1.1rem - 3px)}
+.nav-overlay{display:none;position:fixed;inset:0;z-index:199}
+.nav-overlay.open{display:block}
+
+/* ── MARQUEE ── */
+.marquee-wrap{background:#111;border-bottom:1.5px solid #111;padding:.6rem 0;overflow:hidden}
+.marquee-inner{display:flex;gap:2rem;white-space:nowrap;animation:marquee 25s linear infinite;width:max-content}
+.marquee-inner span{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:#555}
+.marquee-inner span.accent{color:var(--acid)}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ── HERO ── */
+.hero{display:grid;grid-template-columns:1fr 1fr;border-bottom:1.5px solid #111;min-height:calc(100svh - 92px)}
+.hero-left{padding:clamp(2rem,5vw,5rem) var(--p);border-right:1.5px solid #111;display:flex;flex-direction:column;justify-content:space-between;gap:2rem}
+.hero-right{display:flex;flex-direction:column}
+.hero-stat-block{flex:1;padding:clamp(1.5rem,3vw,2.5rem) var(--p);border-bottom:1.5px solid #111;display:flex;flex-direction:column;justify-content:center}
+.hero-stat-block:last-child{border-bottom:none}
+.stat-tag{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--orange);margin-bottom:.4rem}
+.stat-num{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2rem,5vw,3.8rem);letter-spacing:-.05em;line-height:1;color:#111;margin-bottom:.4rem}
+.stat-num em{font-style:normal;color:var(--orange)}
+.stat-desc{font-size:clamp(.78rem,1.5vw,.875rem);color:var(--mid);line-height:1.55}
+.hero-tagline{font-size:clamp(.875rem,2vw,1rem);color:var(--mid);line-height:1.65;padding-top:1.5rem;border-top:1.5px solid var(--border);margin-bottom:1.5rem}
+.hero-actions{display:flex;gap:.75rem;flex-wrap:wrap}
+
+/* ── CTA BANNER ── */
+.cta-banner{background:var(--acid);padding:clamp(2rem,5vw,4rem) var(--p);display:flex;align-items:center;justify-content:space-between;gap:1.5rem;border-bottom:1.5px solid #111}
+.cta-banner h2{color:#111;max-width:500px}
+.cta-banner h2 em{color:#111;background:none}
+
+/* ── FOOTER ── */
+footer{padding:clamp(1.25rem,3vw,2rem) var(--p);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;border-top:1.5px solid #111}
+.footer-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:#111}
+.footer-logo em{font-style:normal;background:#111;color:var(--acid);padding:0 .12em}
+.footer-links{display:flex;gap:1.5rem;list-style:none;flex-wrap:wrap}
+.footer-links a{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mid)}
+.footer-links a:hover{color:#111}
+.footer-note{font-family:'DM Mono',monospace;font-size:.55rem;color:var(--mid)}
+
+/* ── PROCESS STRIP ── */
+.process-strip{display:flex;border-bottom:1.5px solid #111;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.process-step{flex:1;min-width:120px;padding:1rem var(--p);border-right:1.5px solid #111;display:flex;align-items:center;gap:.75rem}
+.process-step:last-child{border-right:none}
+.step-num{font-family:'DM Mono',monospace;font-size:.6rem;color:var(--orange);flex-shrink:0}
+.step-name{font-family:'Syne',sans-serif;font-weight:700;font-size:.78rem;letter-spacing:.05em;text-transform:uppercase}
+
+/* ── FAQ ── */
+.faq-item{border-bottom:1px solid var(--border)}
+.faq-q{font-size:.92rem;font-weight:600;color:#111;padding:1.1rem 0;display:flex;justify-content:space-between;align-items:center;gap:1rem;cursor:pointer}
+.faq-toggle{color:var(--orange);font-size:1.2rem;flex-shrink:0;transition:transform .2s;line-height:1}
+.faq-a{font-size:.875rem;color:var(--mid);line-height:1.8;max-height:0;overflow:hidden;transition:max-height .35s ease,padding .2s}
+.faq-item.open .faq-a{max-height:300px;padding-bottom:1.25rem}
+.faq-item.open .faq-toggle{transform:rotate(45deg)}
+
+/* ── FORM ── */
+.form-group{margin-bottom:1.25rem}
+.form-label{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--mid);display:block;margin-bottom:.4rem}
+.form-input{width:100%;padding:.8rem .9rem;border:1.5px solid var(--border);background:var(--bg);font-family:'DM Sans',sans-serif;font-size:.9rem;color:#111;outline:none;border-radius:0;-webkit-appearance:none;transition:border-color .15s}
+.form-input:focus{border-color:#111}
+.form-input::placeholder{color:var(--border)}
+textarea.form-input{resize:vertical;min-height:110px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.form-submit{font-family:'Syne',sans-serif;font-weight:700;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;background:#111;color:var(--bg);padding:.9rem 1.5rem;border:1.5px solid #111;width:100%;cursor:pointer;margin-top:.5rem;transition:background .15s}
+.form-submit:hover{background:var(--orange);border-color:var(--orange)}
+.form-note{font-family:'DM Mono',monospace;font-size:.58rem;color:var(--mid);margin-top:.75rem;line-height:1.6;text-align:center}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.fade-in{opacity:0;transform:translateY(16px)}
+.fade-in.visible{animation:fadeUp .5s forwards}
+
+/* ── TABLET 768px ── */
+@media(max-width:768px){
+  .hero{grid-template-columns:1fr;min-height:auto}
+  .hero-left{border-right:none;border-bottom:1.5px solid #111}
+  .hero-right{display:none}
+  .grid-2{grid-template-columns:1fr}
+  .grid-3{grid-template-columns:1fr}
+  .cell{border-right:none}
+  .cell.no-right-mobile{border-right:none}
+  .left-col{border-right:none;border-bottom:1.5px solid #111}
+  .form-row{grid-template-columns:1fr}
+  .cta-banner{flex-direction:column;align-items:flex-start}
+  .cta-banner .btn{width:100%;display:block}
+  footer{justify-content:center;text-align:center}
+  .footer-links{justify-content:center}
+}
+
+/* ── MOBILE 480px ── */
+@media(max-width:480px){
+  :root{--p:1rem}
+  h1{font-size:clamp(2rem,9vw,2.8rem)}
+  .hero-actions{flex-direction:column}
+  .hero-actions .btn{width:100%;display:block}
+  .btn-primary,.btn-secondary{display:block;width:100%;text-align:center}
+  footer .footer-links{display:none}
+  .footer-note{text-align:center;width:100%}
+  body{padding-bottom:env(safe-area-inset-bottom,0px)}
+  .site-header{padding-top:env(safe-area-inset-top,0px)}
+}
+
+
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);border:1.5px solid #111;margin-top:1.5rem}
+.tier{padding:clamp(1.5rem,3vw,2.25rem);border-right:1.5px solid #111}
+.tier:last-child{border-right:none}
+.tier.tier-dark{background:#111;color:var(--bg)}
+.tier-badge{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;padding:.25rem .6rem;border:1.5px solid #111;color:#111;display:inline-block;margin-bottom:1.25rem}
+.tier-dark .tier-badge{border-color:#555;color:#aaa}
+.tier-badge.badge-acid{background:var(--acid);border-color:var(--acid);color:#111}
+.tier-badge.badge-orange{border-color:var(--orange);color:var(--orange)}
+.tier-num{font-family:'DM Mono',monospace;font-size:.65rem;color:var(--mid);margin-bottom:.35rem}
+.tier-dark .tier-num{color:#888}
+.tier-name{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.6rem,3vw,2rem);letter-spacing:-.03em;line-height:1;margin-bottom:.65rem;color:#111}
+.tier-dark .tier-name{color:var(--bg)}
+.tier-tagline{font-size:clamp(.8rem,1.5vw,.875rem);color:var(--mid);line-height:1.55;padding-bottom:1.5rem;border-bottom:1.5px solid var(--border);margin-bottom:1.5rem}
+.tier-dark .tier-tagline{color:#bbb;border-bottom-color:#2e2e2e}
+.price-label{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mid);margin-bottom:.3rem}
+.tier-dark .price-label{color:#888}
+.price{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.8rem,4vw,2.5rem);letter-spacing:-.04em;line-height:1;color:#111}
+.tier-dark .price{color:var(--bg)}
+.price sub{font-size:.9rem;font-weight:400;vertical-align:baseline;color:var(--mid)}
+.price-note{font-family:'DM Mono',monospace;font-size:.58rem;color:var(--mid);margin-top:.35rem;margin-bottom:1.5rem}
+.tier-dark .price-note{color:#888}
+.deliverables{list-style:none;margin-bottom:1.5rem}
+.deliverables li{font-size:clamp(.8rem,1.5vw,.875rem);color:#111;padding:.55rem 0;border-bottom:1px solid var(--border);display:flex;gap:.6rem;align-items:flex-start;line-height:1.4}
+.tier-dark .deliverables li{color:var(--bg);border-bottom-color:#2e2e2e}
+.deliverables li::before{content:'→';color:var(--orange);font-size:.7rem;flex-shrink:0;margin-top:.1rem}
+.tier-dark .deliverables li::before{color:var(--acid)}
+.tier-duration{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;padding-top:1.25rem;border-top:1.5px solid var(--border);display:flex;justify-content:space-between;color:var(--mid)}
+.tier-dark .tier-duration{border-top-color:#2e2e2e;color:#888}
+.duration-val{color:#111;font-weight:500}
+.tier-dark .duration-val{color:var(--bg)}
+.how-section{display:grid;grid-template-columns:1fr 1fr;gap:0;border-bottom:1.5px solid #111}
+.how-left{padding:clamp(2rem,4vw,4rem) var(--p);border-right:1.5px solid #111}
+.how-right{padding:clamp(2rem,4vw,4rem) var(--p)}
+.faq-group{margin-bottom:2.5rem}
+.faq-group-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(.95rem,2vw,1.1rem);color:#111;padding-bottom:1rem;border-bottom:1.5px solid #111;margin-bottom:.5rem}
+@media(max-width:768px){
+  .tiers{grid-template-columns:1fr}
+  .tier{border-right:none;border-bottom:1.5px solid #111}
+  .tier:last-child{border-bottom:none}
+  .how-section{grid-template-columns:1fr}
+  .how-left{border-right:none;border-bottom:1.5px solid #111}
+}
+
+</style>
 </head>
 <body>
-<div class="cursor" id="c"></div>
-<div class="cursor-ring" id="cr"></div>
-
-<div class="site-header">
+<header class="site-header">
   <div class="header-bar">
     <a href="index.html" class="nav-logo">ai<em>ff</em>iciency</a>
-    <div class="header-cta"><a href="aifficiency-contact.html">Free Scoping Call</a></div>
+    <a href="aifficiency-contact.html" class="nav-cta-btn">Free Scoping Call</a>
   </div>
-  <div class="nav-bar">
+  <nav class="nav-bar">
     <div class="nav-bar-inner">
-      <div class="nav-primary">
-      <a href="index.html">Home</a>
-      <a href="aifficiency-pricing.html" class="active">Services & Pricing</a>
-      <a href="aifficiency-contact.html">Contact</a>
-      </div>
-      <button class="nav-hamburger" onclick="toggleDropdown()" aria-label="More pages">
+      <div class="nav-primary"><a href="index.html" class="">Home</a><a href="aifficiency-pricing.html" class="active">Services & Pricing</a><a href="aifficiency-contact.html" class="">Contact</a></div>
+      <button class="nav-hamburger" id="navBtn" aria-label="More">
         <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
     </div>
-  </div>
-  <div class="nav-overlay" id="navOverlay" onclick="closeDropdown()"></div>
-  <div class="nav-dropdown" id="navDropdown">
-    <a href="aifficiency-why.html">Why AI</a>
-    <a href="aifficiency-about.html">About</a>
-    <a href="aifficiency-insights.html">Insights</a>
-    <a href="aifficiency-faq.html">FAQ</a>
-    <a href="aifficiency-aiready.html">Is AI Right For Me?</a>
-  </div>
-</div>
+    <div class="nav-dropdown" id="navDropdown"><a href="aifficiency-why.html" class="">Why AI</a><a href="aifficiency-about.html" class="">About</a><a href="aifficiency-insights.html" class="">Insights</a><a href="aifficiency-faq.html" class="">FAQ</a><a href="aifficiency-aiready.html" class="">Is AI Right For Me?</a></div>
+  </nav>
+  <div class="nav-overlay" id="navOverlay"></div>
+</header>
 
-</div>
-  <div class="nav-bar">
-    <div class="nav-bar-inner">
-      <div class="nav-primary">
-      <a href="index.html">Home</a>
-      <a href="aifficiency-pricing.html" class="active">Services & Pricing</a>
-      <a href="aifficiency-contact.html">Contact</a>
-      </div>
-      <button class="nav-hamburger" onclick="toggleDropdown()" aria-label="More pages">
-        <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-      </button>
-    </div>
-  </div>
-  <div class="nav-overlay" id="navOverlay" onclick="closeDropdown()"></div>
-  <div class="nav-dropdown" id="navDropdown">
-    <a href="aifficiency-why.html">Why AI</a>
-    <a href="aifficiency-about.html">About</a>
-    <a href="aifficiency-insights.html">Insights</a>
-    <a href="aifficiency-faq.html">FAQ</a>
-    <a href="aifficiency-aiready.html">Is AI Right For Me?</a>
-  </div>
-</div>
-
-<div class="marquee-wrap">
-  <div class="marquee-inner">
-    <span class="accent">◆</span><span>Process Discovery</span>
-    <span class="accent">◆</span><span>AI Opportunity Mapping</span>
-    <span class="accent">◆</span><span>AI Evaluation</span>
-    <span class="accent">◆</span><span>Business Cases</span>
-    <span class="accent">◆</span><span>Implementation Support</span>
-    <span class="accent">◆</span><span>SME-Focused</span>
-    <span class="accent">◆</span><span>Fixed-Price Engagements</span>
-    <span class="accent">◆</span><span>Real ROI</span>
-    <span class="accent">◆</span><span>Process Discovery</span>
-    <span class="accent">◆</span><span>AI Opportunity Mapping</span>
-    <span class="accent">◆</span><span>AI Evaluation</span>
-    <span class="accent">◆</span><span>Business Cases</span>
-    <span class="accent">◆</span><span>Implementation Support</span>
-    <span class="accent">◆</span><span>SME-Focused</span>
-    <span class="accent">◆</span><span>Fixed-Price Engagements</span>
-    <span class="accent">◆</span><span>Real ROI</span>
-  </div>
-</div>
-
-<section class="hero">
-  <div class="hero-eyebrow">Helping small to medium sized businesses unlock efficiencies using artificial intelligence</div>
-  <h1>Three tiers.<br><em>Zero guesswork.</em></h1>
-  <p class="hero-sub">From understanding where you are, to finding what's possible, to making it real — a structured path designed specifically for SMEs.</p>
+<section class="container border-b">
+  <p class="eyebrow">Services & Pricing</p>
+  <h1 style="margin-bottom:1rem">Three tiers.<br><em>Zero guesswork.</em></h1>
+  <p style="max-width:520px">Fixed prices on discovery and evaluation. Time and materials on implementation. Always scoped and agreed before we start.</p>
 </section>
 
 <div class="process-strip">
-  <div class="process-step">
-    <span class="step-num">01</span>
-    <span class="step-name">Discover</span>
-  </div>
-  <div class="process-step">
-    <span class="step-num">02</span>
-    <span class="step-name">Evaluate</span>
-  </div>
-  <div class="process-step">
-    <span class="step-num">03</span>
-    <span class="step-name">Implement</span>
-  </div>
+  <div class="process-step"><span class="step-num">01</span><span class="step-name">Discover</span></div>
+  <div class="process-step"><span class="step-num">02</span><span class="step-name">Evaluate</span></div>
+  <div class="process-step"><span class="step-num">03</span><span class="step-name">Implement</span></div>
 </div>
 
-<section class="tiers-section">
-  <div class="section-label">// Our service tiers</div>
-  <div class="tiers-grid">
-
-    <div class="tier" id="tier1">
+<section class="container-sm border-b">
+  <p class="label">// Our service tiers</p>
+  <div class="tiers">
+    <div class="tier fade-in">
       <div class="tier-badge">Fixed Price</div>
       <div class="tier-num">01</div>
       <div class="tier-name">Discover</div>
-      <div class="tier-tagline">We get under the hood of your business — mapping your processes, identifying where time and money are lost, and spotlighting where AI can make the biggest difference.</div>
-      <div class="price-block">
-        <div class="price-label">Starting from</div>
-        <div class="price">£2,500 <sub>fixed</sub></div>
-        <div class="price-note">* Scope-dependent. Quoted upfront. No surprises.</div>
-      </div>
-      <ul class="tier-deliverables">
-        <li>Current-state process mapping across key business functions</li>
-        <li>Efficiency audit — identifying high and low performance areas</li>
-        <li>AI opportunity heatmap with prioritised recommendations</li>
+      <p class="tier-tagline">Map your processes, identify where time and money are lost, and spotlight where AI can make the biggest difference.</p>
+      <div class="price-label">Starting from</div>
+      <div class="price">£2,500 <sub>fixed</sub></div>
+      <p class="price-note">Scope-dependent. Quoted upfront.</p>
+      <ul class="deliverables">
+        <li>Current-state process mapping</li>
+        <li>Efficiency audit — high and low performance areas</li>
+        <li>AI opportunity heatmap</li>
         <li>Written discovery report with executive summary</li>
-        <li>30-minute readout session with your team</li>
+        <li>30-minute readout session</li>
       </ul>
-      <div class="tier-duration">
-        <span>Typical duration</span>
-        <span class="duration-val">2–3 weeks</span>
-      </div>
-      <a href="#contact" class="cta-btn">Start with Discover</a>
+      <div class="tier-duration"><span>Typical duration</span><span class="duration-val">2–3 weeks</span></div>
+      <a href="aifficiency-contact.html" class="btn btn-dark btn-block" style="margin-top:1.25rem">Start with Discover</a>
     </div>
-
-    <div class="tier tier-dark" id="tier2">
-      <div class="tier-badge acid">Fixed Price</div>
+    <div class="tier tier-dark fade-in">
+      <div class="tier-badge badge-acid">Fixed Price</div>
       <div class="tier-num">02</div>
       <div class="tier-name">Evaluate</div>
-      <div class="tier-tagline">We do the heavy lifting — researching AI tools, vendors, and approaches that fit your opportunities, then presenting a clear business case so you can make confident decisions.</div>
-      <div class="price-block">
-        <div class="price-label">Starting from</div>
-        <div class="price">£4,500 <sub>fixed</sub></div>
-        <div class="price-note">* Requires completion of Discover tier.</div>
-      </div>
-      <ul class="tier-deliverables">
-        <li>Market analysis of AI tools and vendors relevant to your opportunities</li>
-        <li>Shortlisted solution options with pros, cons & fit assessment</li>
-        <li>ROI modelling and cost-benefit analysis per opportunity</li>
+      <p class="tier-tagline">Research AI tools and vendors for your opportunities, then present a clear business case so you can make confident decisions.</p>
+      <div class="price-label">Starting from</div>
+      <div class="price">£4,500 <sub>fixed</sub></div>
+      <p class="price-note">Requires completion of Discover.</p>
+      <ul class="deliverables">
+        <li>Market analysis of AI tools and vendors</li>
+        <li>Solution options with pros, cons & fit assessment</li>
+        <li>ROI modelling and cost-benefit analysis</li>
         <li>Vendor evaluation matrix and recommendation</li>
-        <li>Full business case document, board-ready</li>
+        <li>Board-ready business case document</li>
         <li>Presentation session with Q&A</li>
       </ul>
-      <div class="tier-duration">
-        <span>Typical duration</span>
-        <span class="duration-val">3–4 weeks</span>
-      </div>
-      <a href="#contact" class="cta-btn light">Start Evaluating</a>
+      <div class="tier-duration"><span>Typical duration</span><span class="duration-val">3–4 weeks</span></div>
+      <a href="aifficiency-contact.html" class="btn btn-acid btn-block" style="margin-top:1.25rem">Start Evaluating</a>
     </div>
-
-    <div class="tier" id="tier3">
-      <div class="tier-badge orange">Time and Materials</div>
+    <div class="tier fade-in">
+      <div class="tier-badge badge-orange">Time and Materials</div>
       <div class="tier-num">03</div>
       <div class="tier-name">Implement</div>
-      <div class="tier-tagline">When you're ready to move, we're in the trenches with you — supporting integration, change management, and adoption so AI actually lands in your business.</div>
-      <div class="price-block">
-        <div class="price-label">Day rate from</div>
-        <div class="price">£850 <sub>/day</sub></div>
-        <div class="price-note">* Estimated effort agreed before work begins.</div>
-      </div>
-      <ul class="tier-deliverables">
-        <li>Hands-on implementation support alongside your team or vendor</li>
+      <p class="tier-tagline">Hands-on support through integration, change management, and adoption so AI actually lands in your business.</p>
+      <div class="price-label">Day rate from</div>
+      <div class="price">£850 <sub>/day</sub></div>
+      <p class="price-note">Estimated effort agreed upfront.</p>
+      <ul class="deliverables">
+        <li>Hands-on implementation alongside your team</li>
         <li>Integration oversight and quality assurance</li>
-        <li>Staff onboarding and change management support</li>
-        <li>Process documentation and SOPs for new AI workflows</li>
-        <li>Post-launch monitoring and optimisation (first 30 days)</li>
+        <li>Staff onboarding and change management</li>
+        <li>Process documentation and SOPs</li>
+        <li>30-day post-launch monitoring</li>
       </ul>
-      <div class="tier-duration">
-        <span>Typical engagement</span>
-        <span class="duration-val">4–12 weeks</span>
-      </div>
-      <a href="#contact" class="cta-btn">Discuss Implementation</a>
+      <div class="tier-duration"><span>Typical engagement</span><span class="duration-val">4–12 weeks</span></div>
+      <a href="aifficiency-contact.html" class="btn btn-dark btn-block" style="margin-top:1.25rem">Discuss Implementation</a>
     </div>
-
   </div>
 </section>
 
 <section class="how-section">
-  <div class="section-label">// How it works</div>
-  <div class="how-grid">
-    <div class="how-intro">Start where <em>you</em> are.<br>Go as far as <em>you need.</em></div>
-    <div class="how-detail">
-      <p>Each tier is designed to stand alone — you're never locked in to a full engagement. Run Discover and take the findings in-house. Commission Evaluate and hand the business case to your own team. Or go end-to-end with us: <strong>Discover → Evaluate → Implement.</strong></p>
-      <p>Fixed pricing on Tiers 1 and 2 means you know exactly what you're committing before we start. No scope creep, no hidden hours. Implementation is billed on a time & materials basis with a clear estimated effort agreed upfront — because real-world projects need flexibility.</p>
-      <p>All engagements begin with a free 45-minute scoping call so we can size the work fairly and make sure we're the right fit for your business.</p>
+  <div class="how-left">
+    <p class="label">// How it works</p>
+    <h2 style="margin-bottom:1.25rem">Start where <em>you are.</em><br>Go as far as you need.</h2>
+    <p style="margin-bottom:1rem">Each tier stands alone — you're never locked in. Run Discover and take the findings in-house. Commission Evaluate and hand the business case to your own team. Or go end-to-end.</p>
+    <p>Fixed pricing on Tiers 1 and 2 means you know exactly what you're committing before we start. Implementation is billed on time and materials with a clear estimated effort agreed upfront.</p>
+    <p style="margin-top:1.5rem;padding-top:1.5rem;border-top:1.5px solid var(--border)">All engagements begin with a <strong>free 45-minute scoping call</strong>.</p>
+  </div>
+  <div class="how-right">
+    <p class="label">// Common questions</p>
+    <div class="faq-group">
+      <div class="faq-item">
+        <div class="faq-q">Do I have to buy all three tiers? <span class="faq-toggle">+</span></div>
+        <div class="faq-a">No. Each tier is available independently. We'll always recommend the approach that makes most sense for your situation.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">How are fixed prices set? <span class="faq-toggle">+</span></div>
+        <div class="faq-a">We scope each engagement on a free initial call and provide a fixed price before work begins. The figures shown are starting points for typical SME engagements.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">We're not very technical — is that a problem? <span class="faq-toggle">+</span></div>
+        <div class="faq-a">Not at all. Aifficiency is built for SMEs that are not AI-native. We translate complex technology into plain business language.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">How does time and materials work? <span class="faq-toggle">+</span></div>
+        <div class="faq-a">We agree an estimated day range and day rate upfront. You receive weekly timesheets and can pause or extend as needed.</div>
+      </div>
     </div>
+    <a href="aifficiency-faq.html" style="font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--orange)">View all FAQs →</a>
   </div>
 </section>
 
-<section class="faq-section">
-  <div class="section-label">// Common questions</div>
-  <div class="faq-list">
-    <div class="faq-item">
-      <div class="faq-q">Do I have to buy all three tiers? <span class="toggle">+</span></div>
-      <div class="faq-a">No. Each tier is available independently. That said, Tiers 2 and 3 are significantly more valuable when built on the outputs of the previous stage. We'll always advise the approach that makes most sense for your situation.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q">How are fixed prices determined? <span class="toggle">+</span></div>
-      <div class="faq-a">We scope each engagement during a free initial call and provide a fixed price before any work begins. Pricing scales with the complexity and size of your business — the figures shown are starting points for typical SME engagements.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q">We're not very technical — is that a problem? <span class="toggle">+</span></div>
-      <div class="faq-a">Not at all. Aifficiency is built specifically for SMEs who are not AI-native. We translate complex technology into plain business language and focus on practical outcomes, not technical jargon.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q">What industries do you work with? <span class="toggle">+</span></div>
-      <div class="faq-a">We work across industries — professional services, retail, logistics, hospitality, manufacturing, and more. If you have business processes, there are almost certainly AI opportunities worth exploring.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q">How does the time and materials model work for Implementation? <span class="toggle">+</span></div>
-      <div class="faq-a">We agree an estimated day range and a day rate before the engagement begins. You'll receive weekly timesheets and can pause or extend as needed. We don't start the clock until scope is agreed.</div>
-    </div>
+<div class="cta-banner">
+  <div>
+    <h2>Ready to get started?</h2>
+    <p style="margin-top:.5rem">Free scoping call — no obligation, no pitch.</p>
   </div>
-</section>
+  <a href="aifficiency-contact.html" class="btn btn-dark">Book a free scoping call</a>
+</div>
+
 
 <footer>
   <div class="footer-logo">ai<em>ff</em>iciency</div>
-  <div class="footer-note">Helping SMEs unlock efficiencies using artificial intelligence</div>
+  <ul class="footer-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="aifficiency-why.html">Why AI</a></li>
+    <li><a href="aifficiency-pricing.html">Services</a></li>
+    <li><a href="aifficiency-about.html">About</a></li>
+    <li><a href="aifficiency-insights.html">Insights</a></li>
+    <li><a href="aifficiency-faq.html">FAQ</a></li>
+  </ul>
+  <div class="footer-note">© 2025 Aifficiency</div>
 </footer>
 
 
 <script>
-  function toggleDropdown(){
-    document.getElementById('navDropdown').classList.toggle('open');
-    document.getElementById('navOverlay').classList.toggle('open');
-  }
-  function closeDropdown(){
-    document.getElementById('navDropdown').classList.remove('open');
-    document.getElementById('navOverlay').classList.remove('open');
-  }
+const btn=document.getElementById('navBtn');
+const dd=document.getElementById('navDropdown');
+const ov=document.getElementById('navOverlay');
+if(btn){
+  btn.addEventListener('click',()=>{dd.classList.toggle('open');ov.classList.toggle('open')});
+  ov.addEventListener('click',()=>{dd.classList.remove('open');ov.classList.remove('open')});
+}
+// Scroll fade-ins
+const obs=new IntersectionObserver(els=>els.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:.1});
+document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
 </script>
-<script>
-  const cur=document.getElementById('c'),ring=document.getElementById('cr');
-  if(cur){
-    let mx=0,my=0,rx=0,ry=0;
-    document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
-    (function loop(){rx+=(mx-rx)*0.14;ry+=(my-ry)*0.14;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop)})();
-  }
-</script>
+
 </body>
 </html>
